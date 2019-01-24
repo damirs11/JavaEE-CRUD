@@ -1,0 +1,20 @@
+
+import org.junit.jupiter.api.Test;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author User
+ */
+public class JUnit5ExampleTest {
+    
+    @Test
+    void justAnExample() {
+        System.out.println("This test method should be run");
+    }
+}

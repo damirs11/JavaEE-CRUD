@@ -1,0 +1,365 @@
+{
+    "name": "Root",
+    "id": "root",
+    "children": [
+        {
+            "name": "Справочник организации",
+            "id": "first",
+            "children": [
+                {
+                    "name": "Оргструктура",
+                    "id": "child_1_1",
+                    "ajax": "service/organization",
+                    "grid": {
+                        "id": "grid_child_1_1",
+                        "columns": [
+                            { "field": "id", "label": "Id" },
+                            { "field": "nameOfCompany", "label": "Название Компании" },
+                            { "field": "physicalAdress", "label": "Физ. Адрес" },
+                            { "field": "legalAddress", "label": "Юрид. Адрес" },
+                            { "field": "employee.id", "label": "Руководитель" }
+                        ]
+                    },
+                    "Add_form_structure": { 
+                        "schema": {
+                            "nameOfCompany": {
+                                "type": "string",
+                                "title": "Название Компании",
+                                "required": true
+                            },
+                            "physicalAdress": {
+                                "type": "string",
+                                "title": "Физ. Адрес",
+                                "required": true
+                            },
+                            "legalAddress": {
+                                "type": "string",
+                                "title": "Юрид. Адрес",
+                                "required": true
+                            },
+                            "employee": {
+                                "type": "object",
+                                "title": "Руководитель",
+                                "properties": {
+                                    "id": {
+                                        "type": "number",
+                                        "title": "Id"
+                                    }
+                                }
+                            }
+                        },
+                        "form": [
+                            {
+                                "key": "nameOfCompany",
+                                "id": "nameOfCompanyId",
+                                "value": "{{values.nameOfCompany}}"
+                            },
+                            {
+                                "key": "physicalAdress",
+                                "id": "physicalAdressId",
+                                "value": "{{values.physicalAdress}}"
+                            },
+                            {
+                                "key": "legalAddress",
+                                "id": "legalAddressId",
+                                "value": "{{values.legalAddress}}"
+                            },
+                            {
+                                "key": "employee.id",
+                                "id": "employeeId",
+                                "value": "{{values.employeeId}}"  
+                            },
+                            {
+                              "type": "actions",
+                              "items": [
+                                {
+                                    "id": "add_button",
+                                    "type": "submit",
+                                    "title": "Добавить"
+                                },
+                                {
+                                    "id": "cancel_button",
+                                    "type": "button",
+                                    "title": "Отменить"
+                                }
+                              ]
+                            } 
+                        ],
+                        "value": {
+                            "id": 0,
+                            "nameOfCompany": "",
+                            "physicalAdress": "",
+                            "legalAddress": "",
+                            "employeeId": null
+                            }
+                    },
+                    "Update_form_structure": { 
+                        "schema": {
+                            "id": {
+                                "type": "number",
+                                "title": "Id",
+                                "readonly": true
+                            },
+                            "nameOfCompany": {
+                                "type": "string",
+                                "title": "Название Компании",
+                                "required": true
+                            },
+                            "physicalAdress": {
+                                "type": "string",
+                                "title": "Физ. Адрес",
+                                "required": true
+                            },
+                            "legalAddress": {
+                                "type": "string",
+                                "title": "Юрид. Адрес",
+                                "required": true
+                            },
+                            "employee": {
+                                "type": "object",
+                                "title": "Руководитель",
+                                "properties": {
+                                    "id": {
+                                        "type": "number",
+                                        "title": "Id"
+                                    }
+                                }
+                            }
+                        },
+                        "form": [
+                            {
+                                "key": "id",
+                                "id": "_Id",
+                                "value": "{{values.id}}"
+                            },
+                            {
+                                "key": "nameOfCompany",
+                                "id": "nameOfCompanyId",
+                                "value": "{{values.nameOfCompany}}"
+                            },
+                            {
+                                "key": "physicalAdress",
+                                "id": "physicalAdressId",
+                                "value": "{{values.physicalAdress}}"
+                            },
+                            {
+                                "key": "legalAddress",
+                                "id": "legalAddressId",
+                                "value": "{{values.legalAddress}}"
+                            },
+                            {
+                                "key": "employee",
+                                "id": "employeeId",
+                                "value": "{{values.employeeId}}"
+                            },
+                            {
+                              "type": "actions",
+                              "items": [
+                                {
+                                    "id": "add_button",
+                                    "type": "submit",
+                                    "title": "Обновить"
+                                },
+                                {
+                                    "id": "cancel_button",
+                                    "type": "button",
+                                    "title": "Отменить"
+                                }
+                              ]
+                            } 
+                        ],
+                        "value": {
+                            "id": 0,
+                            "nameOfCompany": "",
+                            "physicalAdress": "",
+                            "legalAddress": "",
+                            "employee": null
+                        }
+                    }
+                },                                 
+                {
+                    "name": "Все сотрудники",
+                    "id": "child_1_2",
+                    "ajax": "service/employee",
+                    "grid": {
+                            "id": "grid_child_1_2",
+                            "columns": {
+                                    "id": "Id",
+                                    "firstName": "Имя",
+                                    "lastName": "Фамилия",
+                                    "middleName": "Отчество",
+                                    "position": "Должность"
+                                }
+                        },
+                    "Add_form_structure": { 
+                            "schema": {
+                                "firstName": {
+                                    "type": "string",
+                                    "title": "Имя",
+                                    "required": true
+                                },
+                                "lastName": {
+                                    "type": "string",
+                                    "title": "Фамилия",
+                                    "required": true
+                                },
+                                "middleName": {
+                                    "type": "string",
+                                    "title": "Отчество",
+                                    "required": true
+                                },
+                                "position": {
+                                    "type": "string",
+                                    "title": "Должность",
+                                    "required": true
+                                }
+                            },
+                            "form": [
+                                {
+                                    "key": "firstName",
+                                    "id": "firstNameId",
+                                    "value": "{{values.firstName}}"
+                                },
+                                {
+                                    "key": "lastName",
+                                    "id": "lastNameId",
+                                    "value": "{{values.lastName}}"
+                                },
+                                {
+                                    "key": "middleName",
+                                    "id": "middleNameId",
+                                    "value": "{{values.middleName}}"
+                                },
+                                {
+                                    "key": "position",
+                                    "id": "positionId",
+                                    "value": "{{values.position}}"
+                                },
+                                {
+                                  "type": "actions",
+                                  "items": [
+                                    {
+                                        "id": "add_button",
+                                        "type": "submit",
+                                        "title": "Добавить"
+                                    },
+                                    {
+                                        "id": "cancel_button",
+                                        "type": "button",
+                                        "title": "Отменить"
+                                    }
+                                  ]
+                                } 
+                            ],
+                            "value": {
+                                "id": 0,
+                                "firstName": "",
+                                "lastName": "",
+                                "middleName": "",
+                                "position": ""
+                            }
+                        },
+                    "Update_form_structure": { 
+                        "schema": {
+                                "id": {
+                                    "type": "number",
+                                    "title": "Id",
+                                    "readonly": true
+                                },
+                                "firstName": {
+                                    "type": "string",
+                                    "title": "Имя",
+                                    "required": true
+                                },
+                                "lastName": {
+                                    "type": "string",
+                                    "title": "Фамилия",
+                                    "required": true
+                                },
+                                "middleName": {
+                                    "type": "string",
+                                    "title": "Отчество",
+                                    "required": true
+                                },
+                                "position": {
+                                    "type": "string",
+                                    "title": "Должность",
+                                    "required": true
+                                }
+                            },
+                        "form": [
+                            {
+                                "key": "id",
+                                "id": "_Id",
+                                "value": "{{values.id}}"
+                            },
+                            {
+                                "key": "firstName",
+                                "id": "firstNameId",
+                                "value": "{{values.firstName}}"
+                            },
+                            {
+                                "key": "lastName",
+                                "id": "lastNameId",
+                                "value": "{{values.lastName}}"
+                            },
+                            {
+                                "key": "middleName",
+                                "id": "middleNameId",
+                                "value": "{{values.middleName}}"
+                            },
+                            {
+                                "key": "position",
+                                "id": "positionId",
+                                "value": "{{values.position}}"
+                            },
+                            {
+                              "type": "actions",
+                              "items": [
+                                {
+                                    "id": "add_button",
+                                    "type": "submit",
+                                    "title": "Обновить"
+                                },
+                                {
+                                    "id": "cancel_button",
+                                    "type": "button",
+                                    "title": "Отменить"
+                                }
+                              ]
+                            } 
+                        ],
+                        "value": {
+                            "id": 0,
+                            "firstName": "",
+                            "lastName": "",
+                            "middleName": "",
+                            "position": ""
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Поручения",
+            "id": "second",
+            "children": [
+                {
+                    "name": "Все поручения",
+                    "id": "child_2_1",
+                    "ajax": "тут будет команда"
+                },
+                {
+                    "name": "Мои поручения",
+                    "id": "child_2_2",
+                    "ajax": "тут будет команда"
+                },
+                {
+                    "name": "Поручения мне",
+                    "id": "child_2_3",
+                    "ajax": "тут будет команда"
+                }
+            ]
+        }
+    ]
+}
