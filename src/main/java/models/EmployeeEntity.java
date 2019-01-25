@@ -1,8 +1,11 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,13 +30,19 @@ public class EmployeeEntity  implements BaseEntity{
     private String position;
     
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_id")
     @JsonBackReference
-    private Set<OrganizationEntity> organization = new HashSet<OrganizationEntity>();
+    private Set<OrganizationEntity> organizations = new HashSet<OrganizationEntity>();
+    
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_id")
     @JsonBackReference
-    private Set<SubdivisionEntity> subdivision = new HashSet<SubdivisionEntity>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "authorCommission")
-    private Set<CommissionEntity> commissionAuthor;
+    private Set<SubdivisionEntity> subdivisions = new HashSet<SubdivisionEntity>();
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_id")
+    @JsonBackReference
+    private Set<CommissionEntity> myCommissions = new HashSet<CommissionEntity>();
     
     public EmployeeEntity(){
     }
@@ -94,35 +103,30 @@ public class EmployeeEntity  implements BaseEntity{
     
 
     @XmlTransient
-    public Set<OrganizationEntity> getOrganization() {
-        return organization;
+    public Set<OrganizationEntity> getOrganizations() {
+        return organizations;
     }
 
-    public void setOrganization(Set<OrganizationEntity> organization) {
-        this.organization = organization;
+    public void setOrganizations(Set<OrganizationEntity> organizations) {
+        this.organizations = organizations;
     }
     
     @XmlTransient
-    public Set<SubdivisionEntity> getSubdivision() {
-        return subdivision;
+    public Set<SubdivisionEntity> getSubdivisions() {
+        return subdivisions;
     }
     
-    public void setSubdivision(Set<SubdivisionEntity> subdivision){
-        this.subdivision = subdivision;
-    }
-
-    public Set<Commission> getCommissionAuthor() {
-        return commissionAuthor;
-    }
-
-    public void setCommissionAuthor(Set<Commission> commissionAuthor) {
-        this.commissionAuthor = commissionAuthor;
+    public void setSubdivisions(Set<SubdivisionEntity> subdivisions){
+        this.subdivisions = subdivisions;
     }
     
-    @Override
-    public String toString() {
-        return "EmployeeEntity{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", middleName=" + middleName + ", position=" + position + ", organization=" + organization + ", subdivision=" + subdivision + ", commissionAuthor=" + commissionAuthor + '}';
+    @XmlTransient
+    public Set<CommissionEntity> getmyCommissions() {
+        return myCommissions;
     }
 
+    public void setmyCommissions(Set<CommissionEntity> myCommissions) {
+        this.myCommissions = myCommissions;
+    }
     
 }

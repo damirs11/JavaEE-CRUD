@@ -1,2 +1,3 @@
 modelslTests\Json_Serializing_Tests.class
+modelslTests\HibernateTests.class
 JUnit5ExampleTest.class

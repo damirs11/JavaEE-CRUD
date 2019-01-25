@@ -16,9 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ДНС
  */
 @Entity
-@Table(catalog = "subdivision"
-    ,schema = "test"
-)
+@Table(name = "subdivision", schema = "test")
 @XmlRootElement
 public class SubdivisionEntity implements BaseEntity {
 
@@ -30,7 +28,7 @@ public class SubdivisionEntity implements BaseEntity {
     private String subdivisionName;
     @Column(name = "contactDetails", nullable=true)
     private String contactDetails;
-    @ManyToOne(targetEntity = EmployeeEntity.class)
+    @ManyToOne
     @JoinColumn(name = "employee_id", nullable=true)
     @JsonManagedReference
     private EmployeeEntity employee;
@@ -41,14 +39,6 @@ public class SubdivisionEntity implements BaseEntity {
     public SubdivisionEntity(String subdivisionName) {
         this.subdivisionName = subdivisionName;
     }
-
-    public SubdivisionEntity(String subdivisionName, String contactDetails, EmployeeEntity employee_id) {
-        this.subdivisionName = subdivisionName;
-        this.contactDetails = contactDetails;
-        this.employee = employee_id;
-    }
-    
-    
 
     @Override
     public Integer getId() {

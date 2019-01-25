@@ -15,6 +15,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import static jdk.nashorn.internal.objects.NativeError.printStackTrace;
 import models.OrganizationEntity;
 import service.OrganizationServiceLocal;
 
@@ -39,6 +40,7 @@ public class OrganizationRest implements RestOperations<OrganizationEntity>{
                 return Response.status(Response.Status.OK).entity(json).build();
             }catch(JsonProcessingException e)
             {
+                System.out.println(e.toString());
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
         } catch (NoResultException e) {
