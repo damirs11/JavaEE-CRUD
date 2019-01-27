@@ -2,8 +2,10 @@ package models;
 // Generated 06.01.2019 13:46:14 by Hibernate Tools 4.3.1
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -36,9 +38,9 @@ public class OrganizationEntity  implements BaseEntity {
     private String legalAddress;
     
     @ManyToOne
-    @JoinColumn(name = "employee_id", nullable=true)
+    @JoinColumn(name = "employee_id")
     @JsonManagedReference
-    private EmployeeEntity employee;
+    private EmployeeEntity employee_id;
     
     public OrganizationEntity() {
     }
@@ -51,7 +53,7 @@ public class OrganizationEntity  implements BaseEntity {
        this.nameOfCompany = nameOfCompany;
        this.physicalAdress = physicalAdress;
        this.legalAddress = legalAddress;
-       this.employee = EmployeeEntity;
+       this.employee_id = EmployeeEntity;
     }
    
     @Override
@@ -89,12 +91,12 @@ public class OrganizationEntity  implements BaseEntity {
         this.legalAddress = legalAddress;
     }
 
-    public EmployeeEntity getEmployee() {
-        return employee;
+    public EmployeeEntity getEmployee_id() {
+        return employee_id;
     }
 
-    public void setEmployee(EmployeeEntity employee) {
-        this.employee = employee;
+    public void setEmployee_id(EmployeeEntity employee_id) {
+        this.employee_id = employee_id;
     }
 
     @Override
@@ -104,7 +106,7 @@ public class OrganizationEntity  implements BaseEntity {
         hash = 17 * hash + Objects.hashCode(this.nameOfCompany);
         hash = 17 * hash + Objects.hashCode(this.physicalAdress);
         hash = 17 * hash + Objects.hashCode(this.legalAddress);
-        hash = 17 * hash + Objects.hashCode(this.employee);
+        hash = 17 * hash + Objects.hashCode(this.employee_id);
         return hash;
     }
 
@@ -132,12 +134,12 @@ public class OrganizationEntity  implements BaseEntity {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        return Objects.equals(this.employee, other.employee);
+        return Objects.equals(this.employee_id, other.employee_id);
     }
 
     @Override
     public String toString() {
-        return "OrganizationEntity{" + "id=" + id + ", nameOfCompany=" + nameOfCompany + ", physicalAdress=" + physicalAdress + ", legalAddress=" + legalAddress + ", employee=" + employee + '}';
+        return "OrganizationEntity{" + "id=" + id + ", nameOfCompany=" + nameOfCompany + ", physicalAdress=" + physicalAdress + ", legalAddress=" + legalAddress + ", employee_id=" + employee_id + '}';
     }
     
     

@@ -17,7 +17,7 @@
                             { "field": "nameOfCompany", "label": "Название Компании" },
                             { "field": "physicalAdress", "label": "Физ. Адрес" },
                             { "field": "legalAddress", "label": "Юрид. Адрес" },
-                            { "field": "employee.id", "label": "Руководитель" }
+                            { "field": "employee", "label": "Руководитель" }
                         ]
                     },
                     "Add_form_structure": { 
@@ -347,7 +347,19 @@
                 {
                     "name": "Все поручения",
                     "id": "child_2_1",
-                    "ajax": "тут будет команда"
+                    "ajax": "service/commission",
+                    "grid": {
+                        "id": "grid_child_2_1",
+                        "columns": [
+                            { "field": "id", "label": "Id" },
+                            { "field": "subjectCommission", "label": "Предмет поручения" },
+                            { "field": "authorCommission", "label": "Автор поручения"},
+                            { "field": "periodExecution", "label": "Срок исполнения", "formatter": "formatTimestamp"},
+                            { "field": "signControl", "label": "Признак контрольности" },
+                            { "field": "signExecution", "label": "Признак исполнения" },
+                            { "field": "commissionText", "label": "Текст поручения" }
+                        ]
+                    }
                 },
                 {
                     "name": "Мои поручения",

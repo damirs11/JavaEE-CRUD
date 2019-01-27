@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import static jdk.nashorn.internal.objects.NativeError.printStackTrace;
 import models.CommissionEntity;
+import models.EmployeeEntity;
 import service.CommissionServiceLocal;
 
 
@@ -129,5 +130,16 @@ public class CommissionRest implements RestOperations<CommissionEntity>{
         }
         commissionService.delete(commissionEntity);
         return Response.noContent().build();
+    }
+    
+    @GET
+    @Path("/forMe/{id:[0-9][0-9]*}")
+    public Response commissionsForMe(@PathParam("id") Integer id){
+
+        List<CommissionEntity> commissionEntity = commissionService.commissionsForMe(id);
+        if(commissionEntity == null){
+            return  Response.status(Response.Status.NOT_FOUND).build();
+        }
+        return Response.status(Response.Status.OK).entity(commissionEntity).build();
     }
 }

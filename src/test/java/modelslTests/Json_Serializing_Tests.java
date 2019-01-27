@@ -7,12 +7,16 @@ package modelslTests;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import models.CommissionEntity;
 import models.EmployeeEntity;
 import models.OrganizationEntity;
 import models.SubdivisionEntity;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.MatcherAssert.assertThat;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -21,33 +25,60 @@ import org.junit.jupiter.api.Test;
  */
 public class Json_Serializing_Tests {
     
+    private SessionFactory sessionFactory;
+    private Session session = null;
+    
     @Test
     public void Employee_Organization_Serializing()
             throws JsonProcessingException{
         
         EmployeeEntity emp = new EmployeeEntity("first", "last", "middle", "posit");
-        OrganizationEntity org = new OrganizationEntity("name", "pith", "legal", emp);
-        SubdivisionEntity sub = new SubdivisionEntity();
-        CommissionEntity com = new CommissionEntity("123", emp);
-        
-        emp.getOrganizations().add(org);
-        emp.getSubdivisions().add(sub);
-        emp.getmyCommissions().add(com);
-        
-        String result1 = new ObjectMapper().writeValueAsString(org);
-        String result2 = new ObjectMapper().writeValueAsString(sub);
-        String result3 = new ObjectMapper().writeValueAsString(com);
+        CommissionEntity com = new CommissionEntity("sub", emp);
         
         
         
-        
-        
-        assertThat(result1, containsString("name"));
-        assertThat(result1, containsString("first"));
-        
-        System.out.println(result1);
-        System.out.println(result2);
-        System.out.println(result3);
+        String result = new ObjectMapper().writeValueAsString(com);
+        System.out.println(result);
+
     }
     
+//    @Test
+//    public void givenData_whenInsert_thenCreatesMtoMrelationship() {
+//        
+//        AnnotationConfiguration configuration = new AnnotationConfiguration();
+//        
+//        configuration.addAnnotatedClass(EmployeeEntity.class)
+//            .addAnnotatedClass(SubdivisionEntity.class)
+//            .addAnnotatedClass(CommissionEntity.class)
+//            .addAnnotatedClass(OrganizationEntity.class);
+//            
+//        configuration.setProperty("hibernate.dialect",
+//            "org.hibernate.dialect.MySQLDialect");
+//        configuration.setProperty("hibernate.connection.driver_class",
+//            "com.mysql.jdbc.Driver");
+//        configuration.setProperty("hibernate.connection.url", 
+//                "jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+//        configuration.setProperty("hibernate.connection.username", "newuser");
+//        configuration.setProperty("hibernate.connection.password", "123456");
+//        
+//        sessionFactory = configuration.buildSessionFactory();
+//        session = sessionFactory.openSession();
+//        
+//        EmployeeEntity emp1 = new EmployeeEntity("f", "l", "p");
+//        CommissionEntity com = new CommissionEntity("sub", emp1);
+//
+//        session.beginTransaction();
+//        session.saveOrUpdate(emp1);
+//        session.saveOrUpdate(com);
+//        session.getTransaction().commit();
+//        
+//        System.out.println(com.getId());
+//        
+//        List<CommissionEntity> list = session.createCriteria(CommissionEntity.class).list();
+//        
+//        System.out.println(list);
+//        
+//        session.close();
+//        sessionFactory.close();
+//    }
 }

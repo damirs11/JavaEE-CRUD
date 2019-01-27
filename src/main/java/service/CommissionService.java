@@ -6,10 +6,12 @@
 package service;
 
 import dao.CommissionDao;
+import dao.EmployeeDao;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import models.CommissionEntity;
+import models.EmployeeEntity;
 
 /**
  *
@@ -19,7 +21,10 @@ import models.CommissionEntity;
 public class CommissionService implements CommissionServiceLocal {
 
     @EJB
-    private CommissionDao employeeDao;
+    private CommissionDao commissionDao;
+    @EJB
+    private EmployeeDao employeeDao;
+    
     
     CommissionEntity result;
     
@@ -28,12 +33,12 @@ public class CommissionService implements CommissionServiceLocal {
         if (entity == null) {
             throw new NullPointerException("Entity cannot be null");
         }
-            employeeDao.saveOrUpdate(entity);
+            commissionDao.saveOrUpdate(entity);
     }
 
     @Override
     public List<CommissionEntity> findAll() {
-        List<CommissionEntity> ent = employeeDao.findAll();
+        List<CommissionEntity> ent = commissionDao.findAll();
         System.out.println(ent);
         return ent;
     }
@@ -43,28 +48,33 @@ public class CommissionService implements CommissionServiceLocal {
         if (entity == null) {
             throw new NullPointerException("Entity cannot be null");
         }
-            employeeDao.update(entity);
+            commissionDao.update(entity);
         
     }
 
     @Override
     public void edit(CommissionEntity entity) {
-        employeeDao.edit(entity);
+        commissionDao.edit(entity);
     }
 
     @Override
     public void delete(CommissionEntity entity) {
-        employeeDao.delete(entity);
+        commissionDao.delete(entity);
     }
 
     @Override
     public CommissionEntity findById(Integer id) {
-        return employeeDao.findById(id);
+        return commissionDao.findById(id);
     }
     
     @Override
     public List<CommissionEntity> findForPage(int startNumber, int pageSize){
-        return employeeDao.findForPage(startNumber, pageSize);
+        return commissionDao.findForPage(startNumber, pageSize);
+    }
+    
+    public  List<CommissionEntity> commissionsForMe(int id){
+        
+        return commissionDao.findMyCommissions(id);
     }
 
 }

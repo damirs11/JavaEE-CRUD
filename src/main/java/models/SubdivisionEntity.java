@@ -1,6 +1,9 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,9 +32,9 @@ public class SubdivisionEntity implements BaseEntity {
     @Column(name = "contactDetails", nullable=true)
     private String contactDetails;
     @ManyToOne
-    @JoinColumn(name = "employee_id", nullable=true)
+    @JoinColumn(name = "employee_id")
     @JsonManagedReference
-    private EmployeeEntity employee;
+    private EmployeeEntity employee_id;
 
     public SubdivisionEntity() {
     }
@@ -65,12 +68,12 @@ public class SubdivisionEntity implements BaseEntity {
         this.contactDetails = contactDetails;
     }
 
-    public EmployeeEntity getEmployee() {
-        return employee;
+    public EmployeeEntity getEmployee_id() {
+        return employee_id;
     }
 
-    public void setEmployee(EmployeeEntity employee) {
-        this.employee = employee;
+    public void setEmployee_id(EmployeeEntity employee_id) {
+        this.employee_id = employee_id;
     }
 
 }

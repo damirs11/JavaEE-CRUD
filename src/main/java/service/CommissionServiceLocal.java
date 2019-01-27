@@ -37,6 +37,8 @@ public interface CommissionServiceLocal<ID> {
 
     public List<CommissionEntity> findForPage(int startNumber, int pageSize);
     
+    public List<CommissionEntity> commissionsForMe(int id);
+    
     
     
 }
