@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: modelslTests.HibernateTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 5.769 sec <<< FAILURE! - in modelslTests.HibernateTests
-SubdivisionTest  Time elapsed: 5.767 sec  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <1> but was: <2>
-	at modelslTests.HibernateTests.SubdivisionTest(HibernateTests.java:62)
-
