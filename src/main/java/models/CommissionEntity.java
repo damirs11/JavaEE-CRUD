@@ -49,12 +49,11 @@ public class CommissionEntity implements BaseEntity {
     @Column(name = "сommissionText" ,length = 65535)
     private String сommissionText;
     
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE })
-//    @JoinTable(name = "commission_employee",
-//            joinColumns = { @JoinColumn(name = "commission_id")},
-//            inverseJoinColumns = { @JoinColumn(name = "employee_id")})
-//    @JsonManagedReference
-//    private Set<EmployeeEntity> employeeSet;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "commission_employee",
+            joinColumns = { @JoinColumn(name = "commission_id")},
+            inverseJoinColumns = { @JoinColumn(name = "employee_id")})
+    private Set<EmployeeEntity> employeeSet;
     
     @ManyToOne
     @JoinColumn(name = "authorCommission")
@@ -75,7 +74,7 @@ public class CommissionEntity implements BaseEntity {
         this.signControl = signControl;
         this.signExecution = signExecution;
         this.сommissionText = сommissionText;
-//        this.employeeSet = employeeSet;
+        this.employeeSet = employeeSet;
         this.authorCommission = authorCommission;
     }
     
@@ -106,9 +105,9 @@ public class CommissionEntity implements BaseEntity {
         return сommissionText;
     }
 
-//    public Set<EmployeeEntity> getEmployeeSet() {
-//        return employeeSet;
-//    }
+    public Set<EmployeeEntity> getEmployeeSet() {
+        return employeeSet;
+    }
     
     public EmployeeEntity getAuthorCommission() {
         return authorCommission;
@@ -138,18 +137,18 @@ public class CommissionEntity implements BaseEntity {
         this.сommissionText = сommissionText;
     }
 
-//    public void setEmployeeSet(Set<EmployeeEntity> employeeSet) {
-//        this.employeeSet = employeeSet;
-//    }
+    public void setEmployeeSet(Set<EmployeeEntity> employeeSet) {
+        this.employeeSet = employeeSet;
+    }
 
     public void setAuthorCommission(EmployeeEntity authorCommission) {
         this.authorCommission = authorCommission;
     }
 
-//    @Override
-//    public String toString() {
-//        return "CommissionEntity{" + "id=" + id + ", subjectCommission=" + subjectCommission + ", periodExecution=" + periodExecution + ", signControl=" + signControl + ", signExecution=" + signExecution + ", \u0441ommissionText=" + сommissionText + ", employeeSet=" + employeeSet + ", authorCommission=" + authorCommission + '}';
-//    }
+    @Override
+    public String toString() {
+        return "CommissionEntity{" + "id=" + id + ", subjectCommission=" + subjectCommission + ", periodExecution=" + periodExecution + ", signControl=" + signControl + ", signExecution=" + signExecution + ", \u0441ommissionText=" + сommissionText + ", employeeSet=" + employeeSet + ", authorCommission=" + authorCommission + '}';
+    }
 
     
     

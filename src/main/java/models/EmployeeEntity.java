@@ -37,12 +37,11 @@ public class EmployeeEntity  implements BaseEntity{
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee_id")
     private Set<SubdivisionEntity> subdivisions = new HashSet<SubdivisionEntity>();
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "authorCommission")
     private Set<CommissionEntity> myCommissions = new HashSet<CommissionEntity>();
     
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employeeSet")
-//    @JsonBackReference
-//    private Set<CommissionEntity> commissionsForMe = new HashSet<CommissionEntity>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employeeSet")
+    private Set<CommissionEntity> commissionsForMe = new HashSet<CommissionEntity>();
     
     public EmployeeEntity(){
     }
@@ -100,7 +99,7 @@ public class EmployeeEntity  implements BaseEntity{
     public String getPosition() {
         return position;
     }
-//    
+    
 
     @XmlTransient
     public Set<OrganizationEntity> getOrganizations() {
@@ -128,20 +127,20 @@ public class EmployeeEntity  implements BaseEntity{
     public void setMyCommissions(Set<CommissionEntity> myCommissions) {
         this.myCommissions = myCommissions;
     }
-//    
-//    @XmlTransient
-//    public Set<CommissionEntity> getCommissionsForMy() {
-//        return commissionsForMe;
-//    }
-//
-//    public void setCommissionsForMy(Set<CommissionEntity> commissionsForMe) {
-//        this.commissionsForMe = commissionsForMe;
-//    }
+    
+    @XmlTransient
+    public Set<CommissionEntity> getCommissionsForMy() {
+        return commissionsForMe;
+    }
 
-//    @Override
-//    public String toString() {
-//        return "EmployeeEntity{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", middleName=" + middleName + ", position=" + position + '}';
-//    }
+    public void setCommissionsForMy(Set<CommissionEntity> commissionsForMe) {
+        this.commissionsForMe = commissionsForMe;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeEntity{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", middleName=" + middleName + ", position=" + position + '}';
+    }
 
     
     
