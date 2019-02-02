@@ -129,11 +129,11 @@ public class EmployeeEntity  implements BaseEntity{
     }
     
     @XmlTransient
-    public Set<CommissionEntity> getCommissionsForMy() {
+    public Set<CommissionEntity> getCommissionsForMe() {
         return commissionsForMe;
     }
 
-    public void setCommissionsForMy(Set<CommissionEntity> commissionsForMe) {
+    public void setCommissionsForMe(Set<CommissionEntity> commissionsForMe) {
         this.commissionsForMe = commissionsForMe;
     }
 

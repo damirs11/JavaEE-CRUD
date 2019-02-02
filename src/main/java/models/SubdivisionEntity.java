@@ -43,6 +43,12 @@ public class SubdivisionEntity implements BaseEntity {
         this.subdivisionName = subdivisionName;
     }
 
+    public SubdivisionEntity(String subdivisionName, String contactDetails, EmployeeEntity employee_id) {
+        this.subdivisionName = subdivisionName;
+        this.contactDetails = contactDetails;
+        this.employee_id = employee_id;
+    }
+
     @Override
     public Integer getId() {
         return id;

@@ -42,7 +42,7 @@ public class CommissionEntity implements BaseEntity {
     private String subjectCommission;
     @Temporal(TemporalType.DATE)
     private Date periodExecution;
-    @Column(name = "signControl", length = 255)
+    @Column(name = "signControl")
     private String signControl;
     @Column(name = "signExecution")
     private String signExecution;
@@ -53,7 +53,7 @@ public class CommissionEntity implements BaseEntity {
     @JoinTable(name = "commission_employee",
             joinColumns = { @JoinColumn(name = "commission_id")},
             inverseJoinColumns = { @JoinColumn(name = "employee_id")})
-    private Set<EmployeeEntity> employeeSet;
+    private Set<EmployeeEntity> commissioners;
     
     @ManyToOne
     @JoinColumn(name = "authorCommission")
@@ -67,18 +67,17 @@ public class CommissionEntity implements BaseEntity {
         this.authorCommission = authorCommission;
     }
 
-    public CommissionEntity(Integer id, String subjectCommission, Date periodExecution, String signControl, String signExecution, String сommissionText, Set<EmployeeEntity> employeeSet, EmployeeEntity authorCommission) {
-        this.id = id;
+    public CommissionEntity(String subjectCommission, Date periodExecution, String signControl, String signExecution, String сommissionText, Set<EmployeeEntity> commissioners, EmployeeEntity authorCommission) {
         this.subjectCommission = subjectCommission;
         this.periodExecution = periodExecution;
         this.signControl = signControl;
         this.signExecution = signExecution;
         this.сommissionText = сommissionText;
-        this.employeeSet = employeeSet;
+        this.commissioners = commissioners;
         this.authorCommission = authorCommission;
     }
-    
-    
+
+
 
     @Override
     public Integer getId() {
@@ -105,8 +104,8 @@ public class CommissionEntity implements BaseEntity {
         return сommissionText;
     }
 
-    public Set<EmployeeEntity> getEmployeeSet() {
-        return employeeSet;
+    public Set<EmployeeEntity> getCommissioners() {
+        return commissioners;
     }
     
     public EmployeeEntity getAuthorCommission() {
@@ -137,20 +136,11 @@ public class CommissionEntity implements BaseEntity {
         this.сommissionText = сommissionText;
     }
 
-    public void setEmployeeSet(Set<EmployeeEntity> employeeSet) {
-        this.employeeSet = employeeSet;
+    public void setCommissioners(Set<EmployeeEntity> commissioners) {
+        this.commissioners = commissioners;
     }
 
     public void setAuthorCommission(EmployeeEntity authorCommission) {
         this.authorCommission = authorCommission;
     }
-
-    @Override
-    public String toString() {
-        return "CommissionEntity{" + "id=" + id + ", subjectCommission=" + subjectCommission + ", periodExecution=" + periodExecution + ", signControl=" + signControl + ", signExecution=" + signExecution + ", \u0441ommissionText=" + сommissionText + ", employeeSet=" + employeeSet + ", authorCommission=" + authorCommission + '}';
-    }
-
-    
-    
-    
 }
