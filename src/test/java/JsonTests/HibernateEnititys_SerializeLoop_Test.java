@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-class OneToMany_HibernateEnititys_SerializeLoop_Test{
+class HibernateEntity_SerializeLoop_Test {
 
     @Test
     void Employee_OneToMany_Organization()
