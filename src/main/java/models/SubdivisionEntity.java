@@ -29,7 +29,7 @@ public class SubdivisionEntity implements BaseEntity {
     
     @Column(name = "subdivisionName", nullable=false)
     private String subdivisionName;
-    @Column(name = "contactDetails", nullable=true)
+    @Column(name = "contactDetails")
     private String contactDetails;
     @ManyToOne
     @JoinColumn(name = "employee_id")

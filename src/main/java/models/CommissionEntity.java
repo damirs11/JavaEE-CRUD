@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "commission", schema = "test")
 @XmlRootElement
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class CommissionEntity implements BaseEntity {
 
     @Id
@@ -46,9 +45,10 @@ public class CommissionEntity implements BaseEntity {
     private String signControl;
     @Column(name = "signExecution")
     private String signExecution;
-    @Column(name = "сommissionText" ,length = 65535)
-    private String сommissionText;
-    
+    @Column(name = "commissionText" ,length = 65535)
+    private String commissionText;
+
+    @JsonManagedReference
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "commission_employee",
             joinColumns = { @JoinColumn(name = "commission_id")},
@@ -67,18 +67,19 @@ public class CommissionEntity implements BaseEntity {
         this.authorCommission = authorCommission;
     }
 
-    public CommissionEntity(String subjectCommission, Date periodExecution, String signControl, String signExecution, String сommissionText, Set<EmployeeEntity> commissioners, EmployeeEntity authorCommission) {
+    public CommissionEntity(String subjectCommission, Date periodExecution, String signControl, String signExecution, String commissionText, Set<EmployeeEntity> commissioners, EmployeeEntity authorCommission) {
         this.subjectCommission = subjectCommission;
         this.periodExecution = periodExecution;
         this.signControl = signControl;
         this.signExecution = signExecution;
-        this.сommissionText = сommissionText;
+        this.commissionText = commissionText;
         this.commissioners = commissioners;
         this.authorCommission = authorCommission;
     }
 
 
 
+    @SuppressWarnings("unchecked")
     @Override
     public Integer getId() {
         return id;
@@ -100,8 +101,8 @@ public class CommissionEntity implements BaseEntity {
         return signExecution;
     }
 
-    public String getСommissionText() {
-        return сommissionText;
+    public String getCommissionText() {
+        return commissionText;
     }
 
     public Set<EmployeeEntity> getCommissioners() {
@@ -132,8 +133,8 @@ public class CommissionEntity implements BaseEntity {
         this.signExecution = signExecution;
     }
 
-    public void setСommissionText(String сommissionText) {
-        this.сommissionText = сommissionText;
+    public void setCommissionText(String commissionText) {
+        this.commissionText = commissionText;
     }
 
     public void setCommissioners(Set<EmployeeEntity> commissioners) {
