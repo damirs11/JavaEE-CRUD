@@ -1,4 +1,4 @@
-package JsonTests;
+package DAO_Tests;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,7 +7,6 @@ import models.EmployeeEntity;
 import models.OrganizationEntity;
 import models.SubdivisionEntity;
 import org.junit.Assert;
-import org.junit.jupiter.api.AssertionsKt;
 import org.junit.jupiter.api.Test;
 
 import javax.json.stream.JsonParsingException;

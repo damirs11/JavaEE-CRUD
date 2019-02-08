@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@Table(name = "employee", schema = "test")
+@Table(name = "employee")
 @XmlRootElement
 public class EmployeeEntity  implements BaseEntity{
 
@@ -139,9 +139,12 @@ public class EmployeeEntity  implements BaseEntity{
 
     @Override
     public String toString() {
-        return "EmployeeEntity{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", middleName=" + middleName + ", position=" + position + '}';
+        return "EmployeeEntity{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", position='" + position + '\'' +
+                '}';
     }
-
-    
-    
 }

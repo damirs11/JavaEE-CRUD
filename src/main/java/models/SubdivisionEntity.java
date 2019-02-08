@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ДНС
  */
 @Entity
-@Table(name = "subdivision", schema = "test")
+@Table(name = "subdivision")
 @XmlRootElement
 public class SubdivisionEntity implements BaseEntity {
 
