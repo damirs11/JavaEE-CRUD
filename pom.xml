@@ -18,31 +18,37 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.1.0</version>
+            <version>LATEST</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.1.0</version>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
-            <version>5.1.0</version>
+            <version>LATEST</version>
             <scope>test</scope>
             </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
-            <version>1.1.0</version>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
-            <version>1.1.0</version>
+            <version>LATEST</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -176,34 +182,6 @@
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.glassfish.maven.plugin</groupId>
-                <artifactId>maven-glassfish-plugin</artifactId>
-                <version>2.1</version>
-                <configuration>
-                    <glassfishDirectory>G:\payara5</glassfishDirectory>
-                    <user>admin</user>
-                    <adminPassword>changeit</adminPassword>
-                    <domain>
-                        <name>domain1</name>
-                        <host>localhost</host>
-                        <adminPort>4848</adminPort>
-                    </domain>
-                    <components>
-                        <component>
-                            <name>${project.artifactId}</name>
-                            <artifact>${project.build.directory}/${project.build.finalName}.war</artifact>
-                        </component>
-                    </components>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>deploy</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </configuration>
             </plugin>
             <plugin>

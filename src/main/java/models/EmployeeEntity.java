@@ -1,10 +1,7 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -12,9 +9,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@Table(name = "employee", schema = "test")
+@Table(name = "employee")
 @XmlRootElement
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class EmployeeEntity  implements BaseEntity{
 
     @Id
@@ -30,17 +26,21 @@ public class EmployeeEntity  implements BaseEntity{
     private String middleName;
     @Column(name="position", nullable=false, length=50)
     private String position;
-    
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee_id")
     private Set<OrganizationEntity> organizations = new HashSet<OrganizationEntity>();
-    
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee_id")
     private Set<SubdivisionEntity> subdivisions = new HashSet<SubdivisionEntity>();
-    
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "authorCommission")
     private Set<CommissionEntity> myCommissions = new HashSet<CommissionEntity>();
-    
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employeeSet")
+
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "commissioners")
     private Set<CommissionEntity> commissionsForMe = new HashSet<CommissionEntity>();
     
     public EmployeeEntity(){
@@ -129,19 +129,22 @@ public class EmployeeEntity  implements BaseEntity{
     }
     
     @XmlTransient
-    public Set<CommissionEntity> getCommissionsForMy() {
+    public Set<CommissionEntity> getCommissionsForMe() {
         return commissionsForMe;
     }
 
-    public void setCommissionsForMy(Set<CommissionEntity> commissionsForMe) {
+    public void setCommissionsForMe(Set<CommissionEntity> commissionsForMe) {
         this.commissionsForMe = commissionsForMe;
     }
 
     @Override
     public String toString() {
-        return "EmployeeEntity{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", middleName=" + middleName + ", position=" + position + '}';
+        return "EmployeeEntity{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", position='" + position + '\'' +
+                '}';
     }
-
-    
-    
 }

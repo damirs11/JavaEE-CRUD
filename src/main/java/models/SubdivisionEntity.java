@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author ДНС
  */
 @Entity
-@Table(name = "subdivision", schema = "test")
+@Table(name = "subdivision")
 @XmlRootElement
 public class SubdivisionEntity implements BaseEntity {
 
@@ -29,7 +29,7 @@ public class SubdivisionEntity implements BaseEntity {
     
     @Column(name = "subdivisionName", nullable=false)
     private String subdivisionName;
-    @Column(name = "contactDetails", nullable=true)
+    @Column(name = "contactDetails")
     private String contactDetails;
     @ManyToOne
     @JoinColumn(name = "employee_id")
@@ -41,6 +41,12 @@ public class SubdivisionEntity implements BaseEntity {
 
     public SubdivisionEntity(String subdivisionName) {
         this.subdivisionName = subdivisionName;
+    }
+
+    public SubdivisionEntity(String subdivisionName, String contactDetails, EmployeeEntity employee_id) {
+        this.subdivisionName = subdivisionName;
+        this.contactDetails = contactDetails;
+        this.employee_id = employee_id;
     }
 
     @Override
@@ -76,4 +82,13 @@ public class SubdivisionEntity implements BaseEntity {
         this.employee_id = employee_id;
     }
 
+    @Override
+    public String toString() {
+        return "SubdivisionEntity{" +
+                "id=" + id +
+                ", subdivisionName='" + subdivisionName + '\'' +
+                ", contactDetails='" + contactDetails + '\'' +
+                ", employee_id=" + employee_id +
+                '}';
+    }
 }

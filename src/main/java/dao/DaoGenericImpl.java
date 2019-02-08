@@ -9,16 +9,15 @@ import org.hibernate.criterion.*;
 
 public abstract class DaoGenericImpl<T>  implements DaoBase<T, Integer> {
     
-    private final Session session;
-    private final Class<T> entityClass;
+    private Session session;
+    private Class<T> entityClass;
     private Criteria criteria;
 
-    public DaoGenericImpl(Class<T> entityClass) {
-        session = HibernateUtil.createSessionFactory().openSession();
+    DaoGenericImpl(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
     
-    public Class<T> getEntityClass() {
+    private Class<T> getEntityClass() {
         return entityClass;
     }
     
@@ -124,7 +123,13 @@ public abstract class DaoGenericImpl<T>  implements DaoBase<T, Integer> {
         return this;
     }
     
-    
+    public  void setSession(Session session){
+        this.session = session;
+    }
+
+    public void initConnectionFromXML(){
+        session = HibernateUtil.createSessionFactory().openSession();
+    }
         
     
 /*

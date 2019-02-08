@@ -2,11 +2,8 @@ package models;
 // Generated 06.01.2019 13:46:14 by Hibernate Tools 4.3.1
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,9 +16,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name="organization"
-    ,schema = "test"
-)
+@Table(name="organization")
 @XmlRootElement
 public class OrganizationEntity  implements BaseEntity {
 
@@ -32,9 +27,9 @@ public class OrganizationEntity  implements BaseEntity {
     
     @Column(name="nameOfCompany", nullable=false)
     private String nameOfCompany;
-    @Column(name="physicalAdress", nullable=true)
-    private String physicalAdress;
-    @Column(name="legalAddress", nullable=true)
+    @Column(name="physicalAddress")
+    private String physicalAddress;
+    @Column(name="legalAddress")
     private String legalAddress;
     
     @ManyToOne
@@ -49,9 +44,9 @@ public class OrganizationEntity  implements BaseEntity {
     public OrganizationEntity(String nameOfCompany) {
         this.nameOfCompany = nameOfCompany;
     }
-    public OrganizationEntity(String nameOfCompany, String physicalAdress, String legalAddress, EmployeeEntity EmployeeEntity) {
+    public OrganizationEntity(String nameOfCompany, String physicalAddress, String legalAddress, EmployeeEntity EmployeeEntity) {
        this.nameOfCompany = nameOfCompany;
-       this.physicalAdress = physicalAdress;
+       this.physicalAddress = physicalAddress;
        this.legalAddress = legalAddress;
        this.employee_id = EmployeeEntity;
     }
@@ -74,12 +69,12 @@ public class OrganizationEntity  implements BaseEntity {
     }
 
     
-    public String getPhysicalAdress() {
-        return this.physicalAdress;
+    public String getPhysicalAddress() {
+        return this.physicalAddress;
     }
     
-    public void setPhysicalAdress(String physicalAdress) {
-        this.physicalAdress = physicalAdress;
+    public void setPhysicalAddress(String physicalAddress) {
+        this.physicalAddress = physicalAddress;
     }
 
     
@@ -104,7 +99,7 @@ public class OrganizationEntity  implements BaseEntity {
         int hash = 3;
         hash = 17 * hash + Objects.hashCode(this.id);
         hash = 17 * hash + Objects.hashCode(this.nameOfCompany);
-        hash = 17 * hash + Objects.hashCode(this.physicalAdress);
+        hash = 17 * hash + Objects.hashCode(this.physicalAddress);
         hash = 17 * hash + Objects.hashCode(this.legalAddress);
         hash = 17 * hash + Objects.hashCode(this.employee_id);
         return hash;
@@ -125,7 +120,7 @@ public class OrganizationEntity  implements BaseEntity {
         if (!Objects.equals(this.nameOfCompany, other.nameOfCompany)) {
             return false;
         }
-        if (!Objects.equals(this.physicalAdress, other.physicalAdress)) {
+        if (!Objects.equals(this.physicalAddress, other.physicalAddress)) {
             return false;
         }
         if (!Objects.equals(this.legalAddress, other.legalAddress)) {
@@ -139,7 +134,7 @@ public class OrganizationEntity  implements BaseEntity {
 
     @Override
     public String toString() {
-        return "OrganizationEntity{" + "id=" + id + ", nameOfCompany=" + nameOfCompany + ", physicalAdress=" + physicalAdress + ", legalAddress=" + legalAddress + ", employee_id=" + employee_id + '}';
+        return "OrganizationEntity{" + "id=" + id + ", nameOfCompany=" + nameOfCompany + ", physicalAdress=" + physicalAddress + ", legalAddress=" + legalAddress + ", employee_id=" + employee_id + '}';
     }
     
     
