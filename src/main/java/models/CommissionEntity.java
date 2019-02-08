@@ -28,7 +28,7 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name = "commission", schema = "test")
+@Table(name = "commission")
 @XmlRootElement
 public class CommissionEntity implements BaseEntity {
 

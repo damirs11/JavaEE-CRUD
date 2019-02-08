@@ -16,9 +16,7 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-@Table(name="organization"
-    ,schema = "test"
-)
+@Table(name="organization")
 @XmlRootElement
 public class OrganizationEntity  implements BaseEntity {
 
