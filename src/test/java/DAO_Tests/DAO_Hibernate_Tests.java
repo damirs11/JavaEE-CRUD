@@ -15,14 +15,14 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.registry.infomodel.Organization;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 class Employee_CRUD_DAO_Hibernate_Tests {
 
@@ -45,7 +45,7 @@ class Employee_CRUD_DAO_Hibernate_Tests {
                 .setProperty("hibernate.connection.autocommit", "true")
                 .setProperty("hibernate.current_session_context_class", "jta")
                 .setProperty("hibernate.connection.driver_class", "com.mysql.jdbc.Driver")
-                .setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/unit?useUnicode=true&serverTimezone=UTC&useSSL=true&verifyServerCertificate=false&createDatabaseIfNotExist=true&createTableIfNotExist=true&characterEncoding=UTF-8")
+                .setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/unit?createDatabaseIfNotExist=true&useUnicode=true&serverTimezone=UTC&useSSL=true&verifyServerCertificate=false&createDatabaseIfNotExist=true&createTableIfNotExist=true&characterEncoding=UTF-8")
                 .setProperty("hibernate.connection.username", "newuser")
                 .setProperty("hibernate.connection.password", "123456")
                 .setProperty("hibernate.hbm2ddl.auto", "create-drop")
@@ -59,12 +59,12 @@ class Employee_CRUD_DAO_Hibernate_Tests {
         System.out.println("Hibernate serviceRegistry created");
 
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        session = sessionFactory.openSession();
     }
 
     @Test
     void Employee_Insert2persons_FindAll_Delete()
     {
-        session = sessionFactory.openSession();
         employeeDao = new EmployeeDao();
         employeeDao.setSession(session);
 
@@ -91,13 +91,20 @@ class Employee_CRUD_DAO_Hibernate_Tests {
     @Test
     void Organization_Insert2persons_FindAll_Delete()
     {
-        session = sessionFactory.openSession();
+        employeeDao = new EmployeeDao();
+        employeeDao.setSession(session);
+
         organizationDao = new OrganizationDao();
         organizationDao.setSession(session);
 
         EmployeeEntity emp1 = new EmployeeEntity("1", "1", "1", "1");
-        OrganizationEntity org1 = new OrganizationEntity("name","physical", "legal", emp1);
         EmployeeEntity emp2 = new EmployeeEntity("2", "2", "2", "2");
+
+        employeeDao.saveOrUpdate(emp1);
+        employeeDao.saveOrUpdate(emp2);
+
+
+        OrganizationEntity org1 = new OrganizationEntity("name","physical", "legal", emp1);
         OrganizationEntity org2 = new OrganizationEntity("name","physical", "legal", emp2);
 
         organizationDao.saveOrUpdate(org1);
@@ -109,8 +116,9 @@ class Employee_CRUD_DAO_Hibernate_Tests {
 
         Assert.assertEquals(2, result.size());
 
-        for(OrganizationEntity emp: result)
-            organizationDao.delete(emp);
+        for(OrganizationEntity emp: result){
+            employeeDao.delete(emp.getEmployee_id());
+            organizationDao.delete(emp);}
 
         result = organizationDao.findAll();
 
@@ -120,22 +128,35 @@ class Employee_CRUD_DAO_Hibernate_Tests {
     @Test
     void Subdivision_Insert2persons_FindAll_Delete()
     {
-        EmployeeEntity emp1 = new EmployeeEntity("first","last", "middle", "pos");
-        EmployeeEntity emp2 = new EmployeeEntity("first","last", "middle", "pos");
+        employeeDao = new EmployeeDao();
+        employeeDao.setSession(session);
+
+        subdivisionDao = new SubdivisionDao();
+        subdivisionDao.setSession(session);
+
+        EmployeeEntity emp1 = new EmployeeEntity("11", "1", "1", "1");
+        EmployeeEntity emp2 = new EmployeeEntity("22", "2", "2", "2");
 
         employeeDao.saveOrUpdate(emp1);
         employeeDao.saveOrUpdate(emp2);
 
-        List<EmployeeEntity> result = employeeDao.findAll();
-        for(EmployeeEntity emp: result)
+        SubdivisionEntity sub1 = new SubdivisionEntity("sub", "contact", emp1);
+        SubdivisionEntity sub2 = new SubdivisionEntity("sub", "contact", emp2);
+
+        subdivisionDao.saveOrUpdate(sub1);
+        subdivisionDao.saveOrUpdate(sub2);
+
+        List<SubdivisionEntity> result = subdivisionDao.findAll();
+        for(SubdivisionEntity emp: result)
             System.out.print(emp.toString() + "\n");
 
         Assert.assertEquals(2, result.size());
 
-        for(EmployeeEntity emp: result)
-            employeeDao.delete(emp);
+        for(SubdivisionEntity sub: result){
+            employeeDao.delete(sub.getEmployee_id());
+            subdivisionDao.delete(sub);}
 
-        result = employeeDao.findAll();
+        result = subdivisionDao.findAll();
 
         Assert.assertEquals(0, result.size());
     }
@@ -143,28 +164,47 @@ class Employee_CRUD_DAO_Hibernate_Tests {
     @Test
     void Commission_Insert2persons_FindAll_Delete()
     {
-        OrganizationEntity emp1 = new OrganizationEntity("first","last", "middle", "pos");
-        OrganizationEntity emp2 = new OrganizationEntity("first","last", "middle", "pos");
+        employeeDao = new EmployeeDao();
+        employeeDao.setSession(session);
 
-        organizationDao.saveOrUpdate();
-        organizationDao.saveOrUpdate();
+        commissionDao = new CommissionDao();
+        commissionDao.setSession(session);
 
-        List<OrganizationEntity> result = organizationDao.findAll();
-        for(OrganizationEntity emp: result)
+        EmployeeEntity emp1 = new EmployeeEntity("111", "1", "1", "1");
+        EmployeeEntity emp2 = new EmployeeEntity("222", "2", "2", "2");
+        Set<EmployeeEntity> setemp = new HashSet<>();
+        setemp.add(emp1);
+        setemp.add(emp2);
+
+        EmployeeEntity author = new EmployeeEntity("author", "2", "2", "2");
+
+        employeeDao.saveOrUpdate(emp1);
+        employeeDao.saveOrUpdate(emp2);
+        employeeDao.saveOrUpdate(author);
+
+        CommissionEntity comm1 = new CommissionEntity("sub", new Date(), "sign", "signE", "Text", setemp, author);
+
+        commissionDao.saveOrUpdate(comm1);
+
+        List<CommissionEntity> result = commissionDao.findAll();
+        for(CommissionEntity emp: result)
             System.out.print(emp.toString() + "\n");
 
-        Assert.assertEquals(2, result.size());
+        Assert.assertEquals(1, result.size());
 
-        for(OrganizationEntity org: result)
-            organizationDao.delete(org);
+        for(CommissionEntity comm: result){
+            employeeDao.delete(comm.getAuthorCommission());
+            for(EmployeeEntity emp: comm.getCommissioners())
+                employeeDao.delete(emp);
+            commissionDao.delete(comm);}
 
-        result = organizationDao.findAll();
+        result = commissionDao.findAll();
 
         Assert.assertEquals(0, result.size());
     }
 
-    @AfterEach
-    void clearConnection() {
+    @AfterAll
+    static void clearConnection() {
         session.close();
         sessionFactory.close();
     }

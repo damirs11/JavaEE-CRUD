@@ -82,4 +82,13 @@ public class SubdivisionEntity implements BaseEntity {
         this.employee_id = employee_id;
     }
 
+    @Override
+    public String toString() {
+        return "SubdivisionEntity{" +
+                "id=" + id +
+                ", subdivisionName='" + subdivisionName + '\'' +
+                ", contactDetails='" + contactDetails + '\'' +
+                ", employee_id=" + employee_id +
+                '}';
+    }
 }

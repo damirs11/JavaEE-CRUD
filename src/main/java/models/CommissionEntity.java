@@ -144,4 +144,18 @@ public class CommissionEntity implements BaseEntity {
     public void setAuthorCommission(EmployeeEntity authorCommission) {
         this.authorCommission = authorCommission;
     }
+
+    @Override
+    public String toString() {
+        return "CommissionEntity{" +
+                "id=" + id +
+                ", subjectCommission='" + subjectCommission + '\'' +
+                ", periodExecution=" + periodExecution +
+                ", signControl='" + signControl + '\'' +
+                ", signExecution='" + signExecution + '\'' +
+                ", commissionText='" + commissionText + '\'' +
+                ", commissioners=" + commissioners +
+                ", authorCommission=" + authorCommission +
+                '}';
+    }
 }
