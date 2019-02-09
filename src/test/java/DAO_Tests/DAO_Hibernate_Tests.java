@@ -65,8 +65,7 @@ class Employee_CRUD_DAO_Hibernate_Tests {
     @Test
     void Employee_Insert2persons_FindAll_Delete()
     {
-        employeeDao = new EmployeeDao();
-        employeeDao.setSession(session);
+        employeeDao = new EmployeeDao(session);
 
         EmployeeEntity emp1 = new EmployeeEntity("first","last", "middle", "pos");
         EmployeeEntity emp2 = new EmployeeEntity("first","last", "middle", "pos");
@@ -91,11 +90,9 @@ class Employee_CRUD_DAO_Hibernate_Tests {
     @Test
     void Organization_Insert2persons_FindAll_Delete()
     {
-        employeeDao = new EmployeeDao();
-        employeeDao.setSession(session);
+        employeeDao = new EmployeeDao(session);
 
-        organizationDao = new OrganizationDao();
-        organizationDao.setSession(session);
+        organizationDao = new OrganizationDao(session);
 
         EmployeeEntity emp1 = new EmployeeEntity("1", "1", "1", "1");
         EmployeeEntity emp2 = new EmployeeEntity("2", "2", "2", "2");
@@ -128,11 +125,9 @@ class Employee_CRUD_DAO_Hibernate_Tests {
     @Test
     void Subdivision_Insert2persons_FindAll_Delete()
     {
-        employeeDao = new EmployeeDao();
-        employeeDao.setSession(session);
+        employeeDao = new EmployeeDao(session);
 
-        subdivisionDao = new SubdivisionDao();
-        subdivisionDao.setSession(session);
+        subdivisionDao = new SubdivisionDao(session);
 
         EmployeeEntity emp1 = new EmployeeEntity("11", "1", "1", "1");
         EmployeeEntity emp2 = new EmployeeEntity("22", "2", "2", "2");
@@ -164,11 +159,9 @@ class Employee_CRUD_DAO_Hibernate_Tests {
     @Test
     void Commission_Insert2persons_FindAll_Delete()
     {
-        employeeDao = new EmployeeDao();
-        employeeDao.setSession(session);
+        employeeDao = new EmployeeDao(session);
 
-        commissionDao = new CommissionDao();
-        commissionDao.setSession(session);
+        commissionDao = new CommissionDao(session);
 
         EmployeeEntity emp1 = new EmployeeEntity("111", "1", "1", "1");
         EmployeeEntity emp2 = new EmployeeEntity("222", "2", "2", "2");
