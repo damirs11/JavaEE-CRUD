@@ -16,7 +16,7 @@ public abstract class DaoGenericImpl<T>  implements DaoBase<T, Integer> {
     DaoGenericImpl(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
-    
+
     private Class<T> getEntityClass() {
         return entityClass;
     }
@@ -48,7 +48,7 @@ public abstract class DaoGenericImpl<T>  implements DaoBase<T, Integer> {
     }
 
     @Override
-    public void update(T entity) { //не работает как задумывалось 
+    public void update(T entity) { //не работает как задумывалось
         session.beginTransaction();
         session.update(entity);
         session.getTransaction().commit();
