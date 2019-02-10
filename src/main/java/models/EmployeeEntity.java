@@ -28,15 +28,15 @@ public class EmployeeEntity  implements BaseEntity{
     private String position;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee_id")
     private Set<OrganizationEntity> organizations = new HashSet<OrganizationEntity>();
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee_id")
     private Set<SubdivisionEntity> subdivisions = new HashSet<SubdivisionEntity>();
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "authorCommission")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "authorCommission")
     private Set<CommissionEntity> myCommissions = new HashSet<CommissionEntity>();
 
     @JsonBackReference

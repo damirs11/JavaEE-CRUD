@@ -1,3 +1,4 @@
+"use strict";
 function load_dgrid(item){
     var grid;
     require([ 'dstore/RequestMemory',
@@ -6,35 +7,34 @@ function load_dgrid(item){
     'dgrid/extensions/DijitRegistry',
     'dgrid/Selection',
     'dgrid/extensions/ColumnResizer',
-    'dgrid/extensions/Pagination',
-    'dojo/date/locale'
-    ], function (RequestMemory, declare, OnDemandGrid, DijitRegistry, Selection, ColumnResizer, locale) {
-        
+    'dgrid/extensions/Pagination'
+    ], function (RequestMemory, declare, OnDemandGrid, DijitRegistry, Selection, ColumnResizer) {
+
         var coll = item.grid.columns;
         console.log(coll);
 
-        
-        var formatTimestamp = 
-            function formatTimestamp(value) {
-                require(['dojo/date/locale'], function (locale){
 
-                var inputDate = new Date(value);  
-                return locale.format(inputDate, 
-                {
-                    selector: 'date',    
-                    datePattern: 'yyyy/MM/dd'   
-                }); 
-            });
-        };
-
-        
-        $.each(coll, function(i, v) {
-            if(v.formatter !== undefined) {
-                eval('var formatter = ' + formatTimestamp);
-                v.formatter = formatter(v);
-                console.log(coll[i]);
-            }
-        });
+        // var formatTimestamp =
+        //     function formatTimestamp(value) {
+        //         require(['dojo/date/locale'], function (locale){
+        //
+        //         var inputDate = new Date(value);
+        //         return locale.format(inputDate,
+        //         {
+        //             selector: 'date',
+        //             datePattern: 'yyyy/MM/dd'
+        //         });
+        //     });
+        // };
+        //
+        //
+        // $.each(coll, function(i, v) {
+        //     if(v.formatter !== undefined) {
+        //         eval('var formatter = ' + formatTimestamp);
+        //         v.formatter = formatter(v);
+        //         console.log(coll[i]);
+        //     }
+        // });
         
         
         
@@ -57,9 +57,10 @@ function load_dgrid(item){
             });
         
         grid.on('.dgrid-content .dgrid-row:dblclick', function (event) {
+            var _row;
             var row = grid.row(event);
             console.log(row.data);
-            var _row = row.data;
+            _row = row.data;
             $.getScript("js/toolbar.js", function(){
                 Update(_row);
             });
@@ -108,9 +109,10 @@ function load_dgrid_pagination(item){
             });
         
         grid.on('.dgrid-content .dgrid-row:dblclick', function (event) {
+            var _row;
             var row = grid.row(event);
             console.log(row.data);
-            var _row = row.data;
+            _row = row.data;
             $.getScript("js/toolbar.js", function(){
                 Update(_row);
             });
@@ -130,16 +132,19 @@ function gridUpdate(){
     ], function(RequestMemory, registry, treemodel) {
         
         $.getScript("js/util.js", function(){
-            
-                
-                json = JSON.parse(treemodel);
-                temp = get_selectedTab_TabContainerWatch();
-                grid_info = JSON.search(json, '//children/children[id="'+ temp +'"]/grid')[0];
-                url = JSON.search(json, '//children/children[id="'+ temp +'"]/ajax')[0];  
 
 
+            var grid;
+            var json;
+            json = JSON.parse(treemodel);
+            var temp;
+            temp = get_selectedTab_TabContainerWatch();
+            var grid_info;
+            grid_info = JSON.search(json, '//children/children[id="'+ temp +'"]/grid')[0];
+            var url;
+            url = JSON.search(json, '//children/children[id="'+ temp +'"]/ajax')[0];
 
-                var grid  = registry.byId(grid_info.id);
+                grid  = registry.byId(grid_info.id);
 
                 grid.set("collection", new RequestMemory({ target: url }));
 
