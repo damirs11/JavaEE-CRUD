@@ -115,9 +115,13 @@ class CRUD_DAO_Hibernate_Tests {
 
         Assert.assertEquals(2, result.size());
 
-        for(OrganizationEntity emp: result){
-            employeeDao.delete(emp.getEmployee_id());
-            organizationDao.delete(emp);}
+        for(OrganizationEntity org: organizationDao.findAll()){
+            organizationDao.delete(org);
+        }
+
+        for(EmployeeEntity emp: employeeDao.findAll()){
+            employeeDao.delete(emp);
+        }
 
         result = organizationDao.findAll();
 
@@ -149,9 +153,13 @@ class CRUD_DAO_Hibernate_Tests {
 
         Assert.assertEquals(2, result.size());
 
-        for(SubdivisionEntity sub: result){
-            employeeDao.delete(sub.getEmployee_id());
-            subdivisionDao.delete(sub);}
+        for(SubdivisionEntity sub: subdivisionDao.findAll()){
+            subdivisionDao.delete(sub);
+        }
+
+        for(EmployeeEntity emp: employeeDao.findAll()){
+            employeeDao.delete(emp);
+        }
 
         result = subdivisionDao.findAll();
 

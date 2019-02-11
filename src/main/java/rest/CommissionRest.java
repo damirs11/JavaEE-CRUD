@@ -21,6 +21,7 @@ import models.EmployeeEntity;
 import service.CommissionServiceLocal;
 
 
+@SuppressWarnings("Duplicates")
 @Path("/commission")
 public class CommissionRest implements RestOperations<CommissionEntity>{
     
@@ -29,7 +30,7 @@ public class CommissionRest implements RestOperations<CommissionEntity>{
     
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response findAll() {
         try {
@@ -51,22 +52,24 @@ public class CommissionRest implements RestOperations<CommissionEntity>{
     
     @GET
     @Path("/{id:[0-9][0-9]*}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response findById(@PathParam("id") Integer id) {
-        CommissionEntity result;
-        
         try {
-            result = commissionService.findById(id);
-        } catch (NoResultException e) {
-            result = null;
-        }
+            CommissionEntity sampleList = commissionService.findById(id);
 
-        if(result == null){
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                String json = objectMapper.writeValueAsString(sampleList);
+                return Response.status(Response.Status.OK).entity(json).build();
+            }catch(JsonProcessingException e)
+            {
+                printStackTrace(e);
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        } catch (NoResultException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        
-        return Response.ok(result).build();
     }
     
 //    @GET
@@ -91,7 +94,7 @@ public class CommissionRest implements RestOperations<CommissionEntity>{
 //    }
     
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response saveOrUpdate(CommissionEntity commissionEntity) {
     
@@ -102,7 +105,7 @@ public class CommissionRest implements RestOperations<CommissionEntity>{
     }
     
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response edit(CommissionEntity commissionEntity){
         
@@ -133,13 +136,44 @@ public class CommissionRest implements RestOperations<CommissionEntity>{
     }
     
     @GET
-    @Path("/forMe/{id:[0-9][0-9]*}")
-    public Response commissionsForMe(@PathParam("id") Integer id){
+    @Path("/mine/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
+    public Response myCommissions(@PathParam("id") Integer id){
+        try {
+            List sampleList = commissionService.myCommissions(id);
 
-        List<CommissionEntity> commissionEntity = commissionService.commissionsForMe(id);
-        if(commissionEntity == null){
-            return  Response.status(Response.Status.NOT_FOUND).build();
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                String json = objectMapper.writeValueAsString(sampleList);
+                return Response.status(Response.Status.OK).entity(json).build();
+            }catch(JsonProcessingException e)
+            {
+                printStackTrace(e);
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        } catch (NoResultException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
-        return Response.status(Response.Status.OK).entity(commissionEntity).build();
+    }
+
+    @GET
+    @Path("/forMe/{id:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
+    public Response commissionsForMe(@PathParam("id") Integer id){
+        try {
+            List sampleList = commissionService.commissionsForMe(id);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                String json = objectMapper.writeValueAsString(sampleList);
+                return Response.status(Response.Status.OK).entity(json).build();
+            }catch(JsonProcessingException e)
+            {
+                printStackTrace(e);
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        } catch (NoResultException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 }

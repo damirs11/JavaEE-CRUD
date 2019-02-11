@@ -30,4 +30,13 @@ public class CommissionDao extends DaoGenericImpl<CommissionEntity>{
 
         return query.list();
     }
+
+    public List<CommissionEntity> findCommissionForMe(int _id){
+
+        String hql = "select c.commissioners from CommissionEntity c where c.id = :id";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("id", _id);
+
+        return query.list();
+    }
 }

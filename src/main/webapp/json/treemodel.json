@@ -10,6 +10,7 @@
                     "name": "Оргструктура",
                     "id": "child_1_1",
                     "ajax": "service/organization",
+                    "inputNeed": false,
                     "grid": {
                         "id": "grid_child_1_1",
                         "columns": [
@@ -181,6 +182,7 @@
                     "name": "Все сотрудники",
                     "id": "child_1_2",
                     "ajax": "service/employee",
+                    "inputNeed": false,
                     "grid": {
                             "id": "grid_child_1_2",
                             "columns": {
@@ -348,6 +350,7 @@
                     "name": "Все поручения",
                     "id": "child_2_1",
                     "ajax": "service/commission",
+                    "inputNeed": false,
                     "grid": {
                         "id": "grid_child_2_1",
                         "columns": [
@@ -364,12 +367,38 @@
                 {
                     "name": "Мои поручения",
                     "id": "child_2_2",
-                    "ajax": "тут будет команда"
+                    "ajax": "service/commission/mine/",
+                    "inputNeed": true,
+                    "grid": {
+                        "id": "grid_child_2_2",
+                        "columns": [
+                            { "field": "id", "label": "Id" },
+                            { "field": "subjectCommission", "label": "Предмет поручения" },
+                            { "field": "authorCommission", "label": "Автор поручения"},
+                            { "field": "periodExecution", "label": "Срок исполнения"},
+                            { "field": "signControl", "label": "Признак контрольности" },
+                            { "field": "signExecution", "label": "Признак исполнения" },
+                            { "field": "commissionText", "label": "Текст поручения" }
+                        ]
+                    }
                 },
                 {
                     "name": "Поручения мне",
                     "id": "child_2_3",
-                    "ajax": "тут будет команда"
+                    "ajax": "service/commission/forMe/",
+                    "inputNeed": true,
+                    "grid": {
+                        "id": "grid_child_2_3",
+                        "columns": [
+                            { "field": "id", "label": "Id" },
+                            { "field": "subjectCommission", "label": "Предмет поручения" },
+                            { "field": "authorCommission", "label": "Автор поручения"},
+                            { "field": "periodExecution", "label": "Срок исполнения"},
+                            { "field": "signControl", "label": "Признак контрольности" },
+                            { "field": "signExecution", "label": "Признак исполнения" },
+                            { "field": "commissionText", "label": "Текст поручения" }
+                        ]
+                    }
                 }
             ]
         }

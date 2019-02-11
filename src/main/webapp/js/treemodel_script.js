@@ -34,11 +34,11 @@ require([
                                     content: "<dir id='" + item.grid.id + "'></dir>",
                                     closable:true
                                 });
-                                 
-                                  $.getScript("js/datagrid.js", function() {
-                                       load_dgrid(item);
-                                       window.dispatchEvent(new Event('resize'));
-                                    }); 
+
+                                $.getScript("js/datagrid.js", function() {
+                                    load_dgrid(item);
+                                    window.dispatchEvent(new Event('resize'));
+                                });
                                 registry.byId("centerPanel_").addChild(pane);
                                 
                                 
@@ -66,7 +66,9 @@ require([
                             else 
                                 $.getScript("js/datagrid.js", function() {
                                    gridUpdate(item); 
-                                });    
+                                });
+
+                            if(item.inputNeed)
                         }
                     }, "divTree");
                     

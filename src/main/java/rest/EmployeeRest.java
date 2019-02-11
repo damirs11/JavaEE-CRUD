@@ -21,7 +21,7 @@ import models.EmployeeEntity;
 import models.OrganizationEntity;
 import service.EmployeeServiceLocal;
 
-
+@SuppressWarnings("Duplicates")
 @Path("/employee")
 public class EmployeeRest implements RestOperations<EmployeeEntity>{
     
@@ -30,7 +30,7 @@ public class EmployeeRest implements RestOperations<EmployeeEntity>{
     
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response findAll() {
         try {
@@ -52,22 +52,24 @@ public class EmployeeRest implements RestOperations<EmployeeEntity>{
     
     @GET
     @Path("/{id:[0-9][0-9]*}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response findById(@PathParam("id") Integer id) {
-        EmployeeEntity result;
-        
         try {
-            result = employeeService.findById(id);
-        } catch (NoResultException e) {
-            result = null;
-        }
+            EmployeeEntity sampleList = employeeService.findById(id);
 
-        if(result == null){
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                String json = objectMapper.writeValueAsString(sampleList);
+                return Response.status(Response.Status.OK).entity(json).build();
+            }catch(JsonProcessingException e)
+            {
+                System.out.println(e.toString());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        } catch (NoResultException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        
-        return Response.ok(result).build();
     }
     
 //    @GET
@@ -92,7 +94,7 @@ public class EmployeeRest implements RestOperations<EmployeeEntity>{
 //    }
     
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response saveOrUpdate(EmployeeEntity employeeEntity) {
     
@@ -103,7 +105,7 @@ public class EmployeeRest implements RestOperations<EmployeeEntity>{
     }
     
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response edit(EmployeeEntity employeeEntity){
         
