@@ -25,6 +25,9 @@ require([
                     });
                     
                     function addTab(item) {
+
+                        console.log("addTab");
+
                         var pane;
                         if(item.ajax !== undefined){
                             if(dom.byId(item.id) === null && dom.byId(item.grid.id) === null){
@@ -60,26 +63,33 @@ require([
                         showRoot: false,
                         onClick: function(item){
                             if(dijit.byId(item.id) === undefined){
-                                addTab(item);
-                                               
+                                console.log(item.inputNeed);
+                                if(item.inputNeed){
+                                    $.getScript("js/inputSearch.js", function () {
+                                        console.log("before f");
+                                        prompt("123", "0");
+                                        inputForm(item, function () {
+                                            addTab(item);
+                                        });
+                                    });
+                                }
+                                else addTab(item);
                             }
                             else 
                                 $.getScript("js/datagrid.js", function() {
                                    gridUpdate(item); 
                                 });
-
-                            if(item.inputNeed)
                         }
                     }, "divTree");
                     
                     governmentTree.startup(); 
                     
-                        $.getScript("js/util.js")//new
-                        .done(function (script, textStatus) {
-                            var temp;
-                            temp = get_InitTabContainerWatch_Status();
-                            if(!temp) {
-                                initTabContainerWatch();
-                            }
+                    $.getScript("js/util.js")//new
+                    .done(function (script, textStatus) {
+                        var temp;
+                        temp = get_InitTabContainerWatch_Status();
+                        if(!temp) {
+                            initTabContainerWatch();
+                        }
                     });
-                });
+});

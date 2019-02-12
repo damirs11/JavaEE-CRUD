@@ -30,8 +30,8 @@ require([
     "dijit/registry",
     "dojo/on",
     "dojo/_base/event",
-    "dojo/domReady!", "toolbar.js/../../jsonform/deps/jquery.min"
-], function(dom, Dialog, Form, TextBox, Button, treemodel, json, registry, on, mod1, mod2, $)
+    "dojo/domReady!"
+], function(dom, Dialog, Form, TextBox, Button, treemodel, json, registry, on)
 {   
     var dia;
     var form;
@@ -55,7 +55,7 @@ require([
         console.log(temp);
         var json_form_structure = JSON.search(json, '//children/children[id="'+ temp +'"]/Add_form_structure')[0];
         
-        dia.set('title', JSON.search(json, '//children/children[id="'+ temp +'"]/name')); //dialoge title set
+        dia.set('title', JSON.search(json, '//children/children[id="'+ temp +'"]/name')); //dialog title set
 
         $(form.containerNode).jsonForm(json_form_structure);
 
@@ -86,7 +86,7 @@ require([
                    url: url,
                    contentType: "application/json; charset=utf-8",
                    dataType: "json",
-                   data: data, // serializes the form's elements.
+                   data: data,
                    statusCode:{
                        201: function(){
                            $.getScript("js/datagrid.js", function(){

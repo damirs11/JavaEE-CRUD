@@ -260,7 +260,7 @@
                                 "middleName": "",
                                 "position": ""
                             }
-                        },
+                    },
                     "Update_form_structure": { 
                         "schema": {
                                 "id": {
@@ -362,6 +362,40 @@
                             { "field": "signExecution", "label": "Признак исполнения" },
                             { "field": "commissionText", "label": "Текст поручения" }
                         ]
+                    },
+                    "Input_form_structure": {
+                        "schema": {
+                            "employee": {
+                              "type": "number",
+                              "title": "Номер Работника:",
+                              "required": true
+                            }
+                        },
+                        "form": [
+                            {
+                              "key": "employee",
+                              "id": "employeeId",
+                              "value": "{{values.employee_id}}"
+                            },
+                            {
+                              "type": "actions",
+                              "items": [
+                              {
+                                "id": "add_button",
+                                "type": "submit",
+                                "title": "Добавить"
+                              },
+                              {
+                                "id": "cancel_button",
+                                "type": "button",
+                                "title": "Отменить"
+                              }
+                              ]
+                            }
+                        ],
+                        "value": {
+                          "employee_id": 0
+                        }
                     }
                 },
                 {
