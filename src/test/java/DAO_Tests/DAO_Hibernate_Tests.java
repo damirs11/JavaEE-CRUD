@@ -24,12 +24,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-class Employee_CRUD_DAO_Hibernate_Tests {
+class CRUD_DAO_Hibernate_Tests {
 
     private static SessionFactory sessionFactory;
     private static Session session;
 
     private EmployeeDao employeeDao;
+
     private OrganizationDao organizationDao;
     private SubdivisionDao subdivisionDao;
     private CommissionDao commissionDao;
@@ -49,6 +50,7 @@ class Employee_CRUD_DAO_Hibernate_Tests {
                 .setProperty("hibernate.connection.username", "newuser")
                 .setProperty("hibernate.connection.password", "123456")
                 .setProperty("hibernate.hbm2ddl.auto", "create-drop")
+                .setProperty("hibernate.show_sql", "true")
                 .addAnnotatedClass(EmployeeEntity.class)
                 .addAnnotatedClass(OrganizationEntity.class)
                 .addAnnotatedClass(SubdivisionEntity.class)
@@ -113,9 +115,13 @@ class Employee_CRUD_DAO_Hibernate_Tests {
 
         Assert.assertEquals(2, result.size());
 
-        for(OrganizationEntity emp: result){
-            employeeDao.delete(emp.getEmployee_id());
-            organizationDao.delete(emp);}
+        for(OrganizationEntity org: organizationDao.findAll()){
+            organizationDao.delete(org);
+        }
+
+        for(EmployeeEntity emp: employeeDao.findAll()){
+            employeeDao.delete(emp);
+        }
 
         result = organizationDao.findAll();
 
@@ -147,9 +153,13 @@ class Employee_CRUD_DAO_Hibernate_Tests {
 
         Assert.assertEquals(2, result.size());
 
-        for(SubdivisionEntity sub: result){
-            employeeDao.delete(sub.getEmployee_id());
-            subdivisionDao.delete(sub);}
+        for(SubdivisionEntity sub: subdivisionDao.findAll()){
+            subdivisionDao.delete(sub);
+        }
+
+        for(EmployeeEntity emp: employeeDao.findAll()){
+            employeeDao.delete(emp);
+        }
 
         result = subdivisionDao.findAll();
 
@@ -176,25 +186,83 @@ class Employee_CRUD_DAO_Hibernate_Tests {
         employeeDao.saveOrUpdate(author);
 
         CommissionEntity comm1 = new CommissionEntity("sub", new Date(), "sign", "signE", "Text", setemp, author);
+        CommissionEntity comm2 = new CommissionEntity("sub", new Date(), "sign", "signE", "Text", setemp, author);
 
         commissionDao.saveOrUpdate(comm1);
+        commissionDao.saveOrUpdate(comm2);
 
         List<CommissionEntity> result = commissionDao.findAll();
         for(CommissionEntity emp: result)
             System.out.print(emp.toString() + "\n");
 
-        Assert.assertEquals(1, result.size());
+        Assert.assertEquals(2, result.size());
 
         for(CommissionEntity comm: result){
-            employeeDao.delete(comm.getAuthorCommission());
-            for(EmployeeEntity emp: comm.getCommissioners())
-                employeeDao.delete(emp);
-            commissionDao.delete(comm);}
+            commissionDao.delete(comm);
+        }
+        for(EmployeeEntity emp: employeeDao.findAll())
+            employeeDao.delete(emp);
 
         result = commissionDao.findAll();
 
         Assert.assertEquals(0, result.size());
     }
+
+    @Test
+    void MyCommission_Test(){
+        employeeDao = new EmployeeDao(session);
+
+        commissionDao = new CommissionDao(session);
+
+        EmployeeEntity emp1 = new EmployeeEntity("111", "1", "1", "1");
+        EmployeeEntity emp2 = new EmployeeEntity("222", "2", "2", "2");
+        Set<EmployeeEntity> setemp = new HashSet<>();
+        setemp.add(emp1);
+        setemp.add(emp2);
+
+        EmployeeEntity author1 = new EmployeeEntity("author", "2", "2", "2");
+        EmployeeEntity author2 = new EmployeeEntity("author", "2", "2", "2");
+
+        employeeDao.saveOrUpdate(emp1);
+        employeeDao.saveOrUpdate(emp2);
+        employeeDao.saveOrUpdate(author1);
+        employeeDao.saveOrUpdate(author2);
+
+        CommissionEntity comm1 = new CommissionEntity("sub1", new Date(), "sign", "signE", "Text", setemp, author1);
+        CommissionEntity comm2 = new CommissionEntity("sub2", new Date(), "sign", "signE", "Text", setemp, author1);
+        CommissionEntity comm3 = new CommissionEntity("sub3", new Date(), "sign", "signE", "Text", setemp, author2);
+
+        commissionDao.saveOrUpdate(comm1);
+        commissionDao.saveOrUpdate(comm2);
+        commissionDao.saveOrUpdate(comm3);
+
+
+
+        List<CommissionEntity> result = commissionDao.findAll();
+        for(CommissionEntity emp: result)
+            System.out.print(emp.toString() + "\n");
+
+        Assert.assertEquals(3, result.size());
+
+
+
+        result = commissionDao.findMyCommissions(author1.getId());
+        for(CommissionEntity emp: result)
+            System.out.print(emp.toString() + "\n");
+
+        Assert.assertEquals(2, result.size());
+
+        for(CommissionEntity comm: commissionDao.findAll()){
+            commissionDao.delete(comm);
+        }
+        for(EmployeeEntity emp: employeeDao.findAll())
+            employeeDao.delete(emp);
+
+        result = commissionDao.findAll();
+
+        Assert.assertEquals(0, result.size());
+    }
+
 
     @AfterAll
     static void clearConnection() {

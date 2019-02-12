@@ -1,10 +1,10 @@
-
+"use strict";
 
 require([
                     "dijit/registry", "dojo/dom", "dojo/json", "dojo/store/Memory",
                     "dijit/tree/ObjectStoreModel", "dijit/Tree", "dojo/request" ,"dojo/text!./json/treemodel.json",
                     "dijit/layout/ContentPane", "dojo/domReady!"
-                ], function(registry, dom, json, Memory, ObjectStoreModel, Tree, request, treemodel, ContentPane){
+], function(registry, dom, json, Memory, ObjectStoreModel, Tree, request, treemodel, ContentPane){
                     // set up the store to get the tree data
                     
                     
@@ -25,19 +25,20 @@ require([
                     });
                     
                     function addTab(item) {
+                        var pane;
                         if(item.ajax !== undefined){
                             if(dom.byId(item.id) === null && dom.byId(item.grid.id) === null){
-                                var pane = new ContentPane({
+                                pane = new ContentPane({
                                     id: item.id,
                                     title: item.name,
                                     content: "<dir id='" + item.grid.id + "'></dir>",
                                     closable:true
                                 });
-                                 
-                                  $.getScript("js/datagrid.js", function() {
-                                       load_dgrid(item);
-                                       window.dispatchEvent(new Event('resize'));
-                                    }); 
+
+                                $.getScript("js/datagrid.js", function() {
+                                    load_dgrid(item);
+                                    window.dispatchEvent(new Event('resize'));
+                                });
                                 registry.byId("centerPanel_").addChild(pane);
                                 
                                 
@@ -65,15 +66,20 @@ require([
                             else 
                                 $.getScript("js/datagrid.js", function() {
                                    gridUpdate(item); 
-                                });    
+                                });
+
+                            if(item.inputNeed)
                         }
                     }, "divTree");
                     
                     governmentTree.startup(); 
                     
-                    $.getScript("js/util.js")//new
+                        $.getScript("js/util.js")//new
                         .done(function (script, textStatus) {
+                            var temp;
                             temp = get_InitTabContainerWatch_Status();
-                            if(!temp) initTabContainerWatch();
+                            if(!temp) {
+                                initTabContainerWatch();
+                            }
                     });
                 });

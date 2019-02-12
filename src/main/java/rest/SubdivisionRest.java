@@ -19,7 +19,7 @@ import static jdk.nashorn.internal.objects.NativeError.printStackTrace;
 import models.SubdivisionEntity;
 import service.SubdivisionServiceLocal;
 
-
+@SuppressWarnings("Duplicates")
 @Path("/subdivision")
 public class SubdivisionRest implements RestOperations<SubdivisionEntity>{
     
@@ -28,7 +28,7 @@ public class SubdivisionRest implements RestOperations<SubdivisionEntity>{
     
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response findAll() {
         try {
@@ -50,27 +50,29 @@ public class SubdivisionRest implements RestOperations<SubdivisionEntity>{
     
     @GET
     @Path("/{id:[0-9][0-9]*}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response findById(@PathParam("id") Integer id) {
-        SubdivisionEntity result;
-        
         try {
-            result = subdivisionService.findById(id);
-        } catch (NoResultException e) {
-            result = null;
-        }
+            SubdivisionEntity sampleList = subdivisionService.findById(id);
 
-        if(result == null){
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                String json = objectMapper.writeValueAsString(sampleList);
+                return Response.status(Response.Status.OK).entity(json).build();
+            }catch(JsonProcessingException e)
+            {
+                printStackTrace(e);
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        } catch (NoResultException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        
-        return Response.ok(result).build();
     }
     
 //    @GET
 //    @Path("/{startNumber:[0-9][0-9]*}&{pageSize[0-9][0-9]*}")
-//    @Produces(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 //    public Response findForPage(@PathParam("startNumber") Integer startNumber
 //            , @PathParam("pageSize") Integer pageSize) {
 //        
@@ -90,7 +92,7 @@ public class SubdivisionRest implements RestOperations<SubdivisionEntity>{
 //    }
     
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response saveOrUpdate(SubdivisionEntity subdivisionEntity) {
     
@@ -101,7 +103,7 @@ public class SubdivisionRest implements RestOperations<SubdivisionEntity>{
     }
     
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response edit(SubdivisionEntity subdivisionEntity){
         

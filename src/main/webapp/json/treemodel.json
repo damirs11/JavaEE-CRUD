@@ -10,14 +10,15 @@
                     "name": "Оргструктура",
                     "id": "child_1_1",
                     "ajax": "service/organization",
+                    "inputNeed": false,
                     "grid": {
                         "id": "grid_child_1_1",
                         "columns": [
                             { "field": "id", "label": "Id" },
                             { "field": "nameOfCompany", "label": "Название Компании" },
-                            { "field": "physicalAdress", "label": "Физ. Адрес" },
+                            { "field": "physicalAddress", "label": "Физ. Адрес" },
                             { "field": "legalAddress", "label": "Юрид. Адрес" },
-                            { "field": "employee", "label": "Руководитель" }
+                            { "field": "employeeId", "label": "Руководитель" }
                         ]
                     },
                     "Add_form_structure": { 
@@ -27,7 +28,7 @@
                                 "title": "Название Компании",
                                 "required": true
                             },
-                            "physicalAdress": {
+                            "physicalAddress": {
                                 "type": "string",
                                 "title": "Физ. Адрес",
                                 "required": true
@@ -55,9 +56,9 @@
                                 "value": "{{values.nameOfCompany}}"
                             },
                             {
-                                "key": "physicalAdress",
-                                "id": "physicalAdressId",
-                                "value": "{{values.physicalAdress}}"
+                                "key": "physicalAddress",
+                                "id": "physicalAddressId",
+                                "value": "{{values.physicalAddress}}"
                             },
                             {
                                 "key": "legalAddress",
@@ -67,7 +68,7 @@
                             {
                                 "key": "employee.id",
                                 "id": "employeeId",
-                                "value": "{{values.employeeId}}"  
+                                "value": "{{values.employee}}"
                             },
                             {
                               "type": "actions",
@@ -88,9 +89,9 @@
                         "value": {
                             "id": 0,
                             "nameOfCompany": "",
-                            "physicalAdress": "",
+                            "physicalAddress": "",
                             "legalAddress": "",
-                            "employeeId": null
+                            "employee": null
                             }
                     },
                     "Update_form_structure": { 
@@ -105,7 +106,7 @@
                                 "title": "Название Компании",
                                 "required": true
                             },
-                            "physicalAdress": {
+                            "physicalAddress": {
                                 "type": "string",
                                 "title": "Физ. Адрес",
                                 "required": true
@@ -138,9 +139,9 @@
                                 "value": "{{values.nameOfCompany}}"
                             },
                             {
-                                "key": "physicalAdress",
-                                "id": "physicalAdressId",
-                                "value": "{{values.physicalAdress}}"
+                                "key": "physicalAddress",
+                                "id": "physicalAddressId",
+                                "value": "{{values.physicalAddress}}"
                             },
                             {
                                 "key": "legalAddress",
@@ -150,7 +151,7 @@
                             {
                                 "key": "employee",
                                 "id": "employeeId",
-                                "value": "{{values.employeeId}}"
+                                "value": "{{values.employee}}"
                             },
                             {
                               "type": "actions",
@@ -171,7 +172,7 @@
                         "value": {
                             "id": 0,
                             "nameOfCompany": "",
-                            "physicalAdress": "",
+                            "physicalAddress": "",
                             "legalAddress": "",
                             "employee": null
                         }
@@ -181,6 +182,7 @@
                     "name": "Все сотрудники",
                     "id": "child_1_2",
                     "ajax": "service/employee",
+                    "inputNeed": false,
                     "grid": {
                             "id": "grid_child_1_2",
                             "columns": {
@@ -348,13 +350,14 @@
                     "name": "Все поручения",
                     "id": "child_2_1",
                     "ajax": "service/commission",
+                    "inputNeed": false,
                     "grid": {
                         "id": "grid_child_2_1",
                         "columns": [
                             { "field": "id", "label": "Id" },
                             { "field": "subjectCommission", "label": "Предмет поручения" },
                             { "field": "authorCommission", "label": "Автор поручения"},
-                            { "field": "periodExecution", "label": "Срок исполнения", "formatter": "formatTimestamp"},
+                            { "field": "periodExecution", "label": "Срок исполнения"},
                             { "field": "signControl", "label": "Признак контрольности" },
                             { "field": "signExecution", "label": "Признак исполнения" },
                             { "field": "commissionText", "label": "Текст поручения" }
@@ -364,12 +367,38 @@
                 {
                     "name": "Мои поручения",
                     "id": "child_2_2",
-                    "ajax": "тут будет команда"
+                    "ajax": "service/commission/mine/",
+                    "inputNeed": true,
+                    "grid": {
+                        "id": "grid_child_2_2",
+                        "columns": [
+                            { "field": "id", "label": "Id" },
+                            { "field": "subjectCommission", "label": "Предмет поручения" },
+                            { "field": "authorCommission", "label": "Автор поручения"},
+                            { "field": "periodExecution", "label": "Срок исполнения"},
+                            { "field": "signControl", "label": "Признак контрольности" },
+                            { "field": "signExecution", "label": "Признак исполнения" },
+                            { "field": "commissionText", "label": "Текст поручения" }
+                        ]
+                    }
                 },
                 {
                     "name": "Поручения мне",
                     "id": "child_2_3",
-                    "ajax": "тут будет команда"
+                    "ajax": "service/commission/forMe/",
+                    "inputNeed": true,
+                    "grid": {
+                        "id": "grid_child_2_3",
+                        "columns": [
+                            { "field": "id", "label": "Id" },
+                            { "field": "subjectCommission", "label": "Предмет поручения" },
+                            { "field": "authorCommission", "label": "Автор поручения"},
+                            { "field": "periodExecution", "label": "Срок исполнения"},
+                            { "field": "signControl", "label": "Признак контрольности" },
+                            { "field": "signExecution", "label": "Признак исполнения" },
+                            { "field": "commissionText", "label": "Текст поручения" }
+                        ]
+                    }
                 }
             ]
         }

@@ -22,16 +22,21 @@ public class CommissionDao extends DaoGenericImpl<CommissionEntity>{
         super.setSession(session);
     }
     
-    public List<CommissionEntity> findMyCommissions(int id){
+    public List<CommissionEntity> findMyCommissions(int _id){
         
-        resetCriteria();
-        getCriteria().add(Restrictions.eq("authorCommission.id", id));
-        getCriteria().setResultTransformer(getCriteria().DISTINCT_ROOT_ENTITY);
-//        //from commission left outer join employee on authorCommission=employee_id
-//        Query query = getSession().createQuery(
-//        "select c from CommissionEntity c");
-//        List<CommissionEntity> em = query.list();
-//        System.out.println(em.toString());
-        return getCriteria().list();
+        String hql = "select c from CommissionEntity c where c.authorCommission.id = :id";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("id", _id);
+
+        return query.list();
+    }
+
+    public List<CommissionEntity> findCommissionForMe(int _id){
+
+        String hql = "select c.commissioners from CommissionEntity c where c.id = :id";
+        Query query = getSession().createQuery(hql);
+        query.setParameter("id", _id);
+
+        return query.list();
     }
 }

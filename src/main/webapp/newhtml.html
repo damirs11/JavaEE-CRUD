@@ -6,7 +6,7 @@ and open the template in the editor.
 
 <link rel="stylesheet" type="text/css" href="css/style.css"/>
 -->
-<html>
+<html lang="ru">
     <head>
         <meta charset="UTF-8">
         
@@ -27,8 +27,9 @@ and open the template in the editor.
         <script type="text/javascript" src="jsonform/deps/opt/jsv.js"></script>
         <script type="text/javascript" src="jsonform/lib/jsonform.js"></script>
         
-        <script>
-            dojoConfig= {
+        <script>"use strict"
+        var dojoConfig;
+        dojoConfig= {
                 has: {
                     "dojo-firebug": true
                 },
@@ -47,6 +48,7 @@ and open the template in the editor.
         
         
         <script>
+            "use strict";
             require(["dojo/parser", "dijit/Toolbar","dijit/layout/BorderContainer", "dijit/layout/TabContainer", "dijit/layout/ContentPane", "dojo/domReady!"], function (parser) {
                 parser.parse();
             });
@@ -65,9 +67,16 @@ and open the template in the editor.
             <div class="topPanel_" id="topPanel" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top', splitter:false, layoutPriority:3">
                 <div id="toolbar" data-dojo-type="dijit/Toolbar">
                     <div data-dojo-type="dijit/form/Button" data-dojo-id="toolbar.add"
-                        onClick="Add();" data-dojo-props="iconClass:'IconAdd', showLabel:true">Add</div>
+
+                        onClick='"use strict"; Add();'
+
+
+                         data-dojo-props="iconClass:'IconAdd', showLabel:true">Add</div>
                     <div data-dojo-type="dijit/form/Button" data-dojo-id="toolbar.delete"
-                        onClick="Delete();" data-dojo-props="iconClass:'IconDelete', showLabel:true">Delete</div>
+
+                        onClick=' "use strict"; Delete();'
+
+                         data-dojo-props="iconClass:'IconDelete', showLabel:true">Delete</div>
                     </div> 
                     
             </div>

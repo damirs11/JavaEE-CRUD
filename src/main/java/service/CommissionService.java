@@ -71,10 +71,14 @@ public class CommissionService implements CommissionServiceLocal {
     public List<CommissionEntity> findForPage(int startNumber, int pageSize){
         return commissionDao.findForPage(startNumber, pageSize);
     }
-    
-    public  List<CommissionEntity> commissionsForMe(int id){
-        
+
+    @Override
+    public  List<CommissionEntity> myCommissions(int id){
         return commissionDao.findMyCommissions(id);
     }
 
+    @Override
+    public List<CommissionEntity> commissionsForMe(int id) {
+        return commissionDao.findCommissionForMe(id);
+    }
 }

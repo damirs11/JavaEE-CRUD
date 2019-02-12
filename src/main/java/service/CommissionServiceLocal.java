@@ -8,6 +8,7 @@ package service;
 import java.util.List;
 import javax.ejb.Local;
 import models.CommissionEntity;
+import models.EmployeeEntity;
 
 /**
  *
@@ -35,9 +36,11 @@ public interface CommissionServiceLocal<ID> {
 
     CommissionEntity findById(Integer id);
 
-    public List<CommissionEntity> findForPage(int startNumber, int pageSize);
+    List<CommissionEntity> findForPage(int startNumber, int pageSize);
     
-    public List<CommissionEntity> commissionsForMe(int id);
+    List<CommissionEntity> myCommissions(int id);
+
+    List<CommissionEntity> commissionsForMe(int id);
     
     
     

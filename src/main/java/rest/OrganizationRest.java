@@ -19,7 +19,7 @@ import static jdk.nashorn.internal.objects.NativeError.printStackTrace;
 import models.OrganizationEntity;
 import service.OrganizationServiceLocal;
 
-
+@SuppressWarnings("Duplicates")
 @Path("/organization")
 public class OrganizationRest implements RestOperations<OrganizationEntity>{
     
@@ -28,7 +28,7 @@ public class OrganizationRest implements RestOperations<OrganizationEntity>{
     
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response findAll() {
         try {
@@ -50,27 +50,29 @@ public class OrganizationRest implements RestOperations<OrganizationEntity>{
     
     @GET
     @Path("/{id:[0-9][0-9]*}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response findById(@PathParam("id") Integer id) {
-        OrganizationEntity result;
-        
         try {
-            result = organizationService.findById(id);
-        } catch (NoResultException e) {
-            result = null;
-        }
+            OrganizationEntity sampleList = organizationService.findById(id);
 
-        if(result == null){
+            ObjectMapper objectMapper = new ObjectMapper();
+            try {
+                String json = objectMapper.writeValueAsString(sampleList);
+                return Response.status(Response.Status.OK).entity(json).build();
+            }catch(JsonProcessingException e)
+            {
+                printStackTrace(e);
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        } catch (NoResultException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        
-        return Response.ok(result).build();
     }
     
 //    @GET
 //    @Path("/{startNumber:[0-9][0-9]*}&{pageSize[0-9][0-9]*}")
-//    @Produces(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 //    public Response findForPage(@PathParam("startNumber") Integer startNumber
 //            , @PathParam("pageSize") Integer pageSize) {
 //        
@@ -90,7 +92,7 @@ public class OrganizationRest implements RestOperations<OrganizationEntity>{
 //    }
     
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response saveOrUpdate(OrganizationEntity organizationEntity) {
     
@@ -101,7 +103,7 @@ public class OrganizationRest implements RestOperations<OrganizationEntity>{
     }
     
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON + "; charset=UTF-8")
     @Override
     public Response edit(OrganizationEntity organizationEntity){
         
