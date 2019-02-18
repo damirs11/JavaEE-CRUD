@@ -1,5 +1,5 @@
 "use strict";
-function load_dgrid(item){
+function load_dgrid(item, extra){
     var grid;
     require([ 'dstore/RequestMemory',
     'dojo/_base/declare',
@@ -9,6 +9,8 @@ function load_dgrid(item){
     'dgrid/extensions/ColumnResizer',
     'dgrid/extensions/Pagination'
     ], function (RequestMemory, declare, OnDemandGrid, DijitRegistry, Selection, ColumnResizer) {
+
+        console.log(extra);
 
         var coll = item.grid.columns;
         console.log(coll);
@@ -90,9 +92,12 @@ function load_dgrid_pagination(item){
         });
         
         console.log(json);
-        
+
+        if(extra !== undefined)
+            var url = item.ajax + extra;
+
         grid = new (declare ([Grid, DijitRegistry, Selection, ColumnResizer, Pagination])) ({
-            collection: new RequestMemory({ target: item.ajax }),
+            collection: new RequestMemory({ target: url }),
             firstLastArrows: true,
             allowTextSelection: true,
             columns: item.grid.columns,

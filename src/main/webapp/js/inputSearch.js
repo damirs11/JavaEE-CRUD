@@ -52,7 +52,7 @@ function inputForm(item) {
 
         form.startup();
         dia.show();
-
-        callback();
     });
+
+    return 12; //---------------
 }

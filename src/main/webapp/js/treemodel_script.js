@@ -38,21 +38,8 @@ require([
                                     closable:true
                                 });
 
-                                $.getScript("js/datagrid.js", function() {
-                                    load_dgrid(item);
-                                    window.dispatchEvent(new Event('resize'));
-                                });
                                 registry.byId("centerPanel_").addChild(pane);
-                                
-                                
-                                
-                                
-                                // add the new pane to our contentTabs widget
-                                
-                            }else 
-                                $.getScript("js/datagrid.js", function() {
-                                       gridUpdate(item); 
-                                    });
+                            }
                         }
                     }
                     
@@ -64,20 +51,26 @@ require([
                         onClick: function(item){
                             if(dijit.byId(item.id) === undefined){
                                 console.log(item.inputNeed);
-                                if(item.inputNeed){
-                                    $.getScript("js/inputSearch.js", function () {
-                                        console.log("before f");
-                                        prompt("123", "0");
-                                        inputForm(item, function () {
-                                            addTab(item);
-                                        });
+
+                                addTab(item);
+
+                                var extra = undefined;
+                                $.getScript("js/inputSearch.js", function () {
+                                    $.getScript("js/datagrid.js", function() {
+
+                                        inputForm().done(load_dgrid())
+
+                                        extra = inputForm(item);
+                                        load_dgrid(item, extra);
+                                        window.dispatchEvent(new Event('resize'));
                                     });
-                                }
-                                else addTab(item);
+                                });
+
+
                             }
                             else 
                                 $.getScript("js/datagrid.js", function() {
-                                   gridUpdate(item); 
+                                   gridUpdate(item, extra);
                                 });
                         }
                     }, "divTree");
