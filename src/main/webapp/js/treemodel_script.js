@@ -56,14 +56,10 @@ require([
 
                                 var extra = undefined;
                                 $.getScript("js/inputSearch.js", function () {
-                                    $.getScript("js/datagrid.js", function() {
 
-                                        inputForm().done(load_dgrid())
+                                    inputForm(item) => console.log();
 
-                                        extra = inputForm(item);
-                                        load_dgrid(item, extra);
-                                        window.dispatchEvent(new Event('resize'));
-                                    });
+                                    console.log(inputForm(item));
                                 });
 
 

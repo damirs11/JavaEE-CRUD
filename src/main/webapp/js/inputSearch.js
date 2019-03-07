@@ -35,7 +35,7 @@ function inputForm(item) {
         $.getScript("js/util.js", function(){
             var temp = get_selectedTab_TabContainerWatch();
             console.log(temp);
-            var json_form_structure = JSON.search(json, '//children/children[id="'+ temp +'"]/Add_form_structure')[0];
+            var json_form_structure = JSON.search(json, '//children/children[id="'+ temp +'"]/Input_form_structure')[0];
 
             dia.set('title', JSON.search(json, '//children/children[id="'+ temp +'"]/name')); //dialoge title set
 
@@ -52,7 +52,19 @@ function inputForm(item) {
 
         form.startup();
         dia.show();
+
+        $("#" + form.id).submit(function(e) {
+            e.preventDefault();
+            var _form;
+            _form = $(this);
+            var data = toJSONString(_form);
+
+            form.destroy();
+            dia.destroy();
+
+            return data;
+        });
     });
 
-    return 12; //---------------
+
 }

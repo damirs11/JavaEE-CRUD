@@ -383,7 +383,7 @@
                     },
                     "Input_form_structure": {
                         "schema": {
-                            "employee": {
+                            "id": {
                                 "type": "number",
                                 "title": "Номер Работника:",
                                 "required": true
@@ -391,9 +391,9 @@
                         },
                         "form": [
                             {
-                                "key": "employee",
-                                "id": "employeeId",
-                                "value": "{{values.employee_id}}"
+                                "key": "id",
+                                "id": "_Id",
+                                "value": "{{values.id}}"
                             },
                             {
                                 "type": "actions",
@@ -412,7 +412,7 @@
                             }
                         ],
                         "value": {
-                            "employee_id": 0
+                            "id": 0
                         }
                     }
                 },
